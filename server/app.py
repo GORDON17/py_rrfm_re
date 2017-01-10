@@ -7,13 +7,13 @@ from flask import Flask
 # db = SQLAlchemy()
 
 def create_app():
-    # from api.kittens import kittens_api
+    from api.similarity import similarity_api
     from views.index import index_view
 
     app = Flask(__name__)
     # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
-    # app.register_blueprint(kittens_api.blueprint, url_prefix='/api')
+    app.register_blueprint(similarity_api.blueprint, url_prefix='/api')
     app.register_blueprint(index_view)
 
     # db.init_app(app)
