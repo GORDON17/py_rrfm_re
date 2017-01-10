@@ -4,7 +4,7 @@
   "description": "re",
   "scripts": {
     "fix": "pip install --upgrade jinja2",
-    "gunicorn": "gunicorn $GUNICORN_PARAMS --chdir server entry:app --timeout 30000",
+    "gunicorn": "gunicorn $GUNICORN_PARAMS --chdir server entry:app --timeout 9999999",
     "start": "webpack-dev-server",
     "test": "NODE_ENV=test BABEL_JEST_STAGE=0 jest",
     "dist": "NODE_ENV=production webpack -p",
