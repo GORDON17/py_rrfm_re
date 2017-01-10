@@ -11,8 +11,8 @@ itsdangerous==0.24
 six==1.10.0
 pymongo==2.7.1
 bson==0.4.3
-NumPy
-SciPy
-scikit-learn
-matplotlib
-pandas
+NumPy==1.11.3
+SciPy==0.18.1
+scikit-learn==0.18.1
+matplotlib==1.5.3
+pandas==0.19.2
