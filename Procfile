@@ -1,3 +1,3 @@
-web: npm run dist && npm run gunicorn
+web: npm run fix && npm run dist && npm run gunicorn
 server: npm run gunicorn
 webpackdev: npm start

@@ -3,7 +3,7 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import Index from './pages/Index';  //////////////////
+// import Index from './pages/Index';  /////////////////
 import jss from 'jss';
 import jssVendorPrefixer from 'jss-vendor-prefixer';
 import jssPx from 'jss-px';
