@@ -1,1 +1,1 @@
-__all__ = ["similarity_service"]
+__all__ = ["similarity_service", "bfs"]
