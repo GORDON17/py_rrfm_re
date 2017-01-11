@@ -34,7 +34,6 @@ app = create_app()
 client = MongoClient(app.config['MONGO_URI'])
 db = client[app.config['MONGO_DBNAME']]
 
-
 # db = PyMongo(app).db
 
 
