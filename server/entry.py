@@ -1,6 +1,6 @@
-from app import create_app
+from app import app, db
 
-app = create_app()
+print db.collection_names()
 
 if __name__ == '__main__':
     app.run()
