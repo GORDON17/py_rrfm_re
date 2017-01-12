@@ -165,19 +165,21 @@ def _datasets_path():
 
 
 def _social_interests_data():
-    request=Request(SOCIAL_INTERESTS_URI)
-    profiles = json.loads(urlopen(request).read())
-    df = pd.DataFrame(profiles)
-    print df.shape
-    return df
+	print ("Sending request to:", SOCIAL_INTERESTS_URI)
+	request=Request(SOCIAL_INTERESTS_URI)
+	profiles = json.loads(urlopen(request).read())
+	df = pd.DataFrame(profiles)
+	print df.shape
+	return df
 
 
 def _event_types_data():
-    request=Request(EVENT_TYPES_URI)
-    events = json.loads(urlopen(request).read())
-    df = pd.DataFrame(events)
-    print df.shape
-    return df
+	print ("Sending request to:", EVENT_TYPES_URI)
+	request=Request(EVENT_TYPES_URI)
+	events = json.loads(urlopen(request).read())
+	df = pd.DataFrame(events)
+	print df.shape
+	return df
 
 
 def _interests_matrix_with_loc(location):
