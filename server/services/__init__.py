@@ -1,1 +1,1 @@
-__all__ = ["similarity_service", "bfs"]
+__all__ = ["similarity_service", "bfs", "mongodb"]

@@ -1,6 +1,7 @@
 from flask import Blueprint, json, jsonify
 from flask_restful import Api, Resource
 from services.similarity_service import *
+from services.mongodb import *
 
 similarity_api = Api(Blueprint('similarity_api', __name__))
 
@@ -14,7 +15,9 @@ class EventSimilarityAPI(Resource):
 class EventLocationSimilarityAPI(Resource):
     @staticmethod
     def get(id, location):
-    	return events_sim_with_loc(id, location).to_json(orient='records')
+    	events_sim = events_sim_with_loc(id, location)
+        update_events_table(id, events_sim)
+        return events_sim.to_json(orient='records')
 
 @similarity_api.resource('/sim/i/<int:id>')
 class InterestSimilarityAPI(Resource):

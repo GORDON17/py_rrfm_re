@@ -14,5 +14,26 @@ def create_db():
 		print "Mongodb(production) is runing on: "
 		print MONGO_URI
 
-
 	return client[MONGO_DBNAME]
+
+
+
+def update_events_table(id, df):
+	db = create_db()
+	# db.events_similarity_table.remove({}) 
+
+	for index, row in df.iterrows():
+		db.events_similarity_table.update_one(
+			{
+				"account_id": id,
+				"user_id": row['account_id']
+			},
+			{
+				"$set": {
+					"similarity_percentage": row['similarity_percentage'] 
+				}
+			},
+			upsert=True
+		)
+
+	print db.events_similarity_table.count()
