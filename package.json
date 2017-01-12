@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "re",
   "scripts": {
-    "fix": "pip install --upgrade jinja2 && pip uninstall pymongo && pip install pymongo",
-    "gunicorn": "SERVER_ENV=production gunicorn $GUNICORN_PARAMS --chdir server entry:app",
+    "fix": "pip install --upgrade jinja2",
+    "gunicorn": "gunicorn $GUNICORN_PARAMS --chdir server entry:app",
     "start": "webpack-dev-server",
     "test": "NODE_ENV=test BABEL_JEST_STAGE=0 jest",
     "dist": "NODE_ENV=production webpack -p",
