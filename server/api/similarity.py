@@ -13,7 +13,7 @@ class EventSimilarityAPI(Resource):
 @similarity_api.resource('/sim/e/<location>/<int:id>')
 class EventLocationSimilarityAPI(Resource):
     @staticmethod
-    def get(id):
+    def get(id, location):
     	return events_sim_with_loc(id, location).to_json(orient='records')
 
 @similarity_api.resource('/sim/i/<int:id>')
@@ -25,5 +25,5 @@ class InterestSimilarityAPI(Resource):
 @similarity_api.resource('/sim/i/<location>/<int:id>')
 class InterestLocationSimilarityAPI(Resource):
     @staticmethod
-    def get(id):
+    def get(id, location):
     	return interests_sim_with_loc(id, location).to_json(orient='records')
