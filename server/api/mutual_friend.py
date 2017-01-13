@@ -3,6 +3,7 @@ from flask import Blueprint, json, jsonify
 from flask_restful import Api, Resource
 
 from services.bfs_service import *
+from configurations.env_configs import *
 
 mutual_friend_api = Api(Blueprint('mutual_friend_api', __name__))
 
@@ -10,7 +11,7 @@ mutual_friend_api = Api(Blueprint('mutual_friend_api', __name__))
 class BFSAPI(Resource):
     @staticmethod
     def get(id):
-			g = graph()
+			g = graph(CONNECTIONS_URI)
 			results = bfs(g, id)
 			return json.dumps(results)
 

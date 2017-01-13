@@ -5,7 +5,7 @@ from scipy.spatial import distance
 from scipy.stats import pearsonr
 from urllib2 import Request, urlopen
 from pandas.io.json import json_normalize
-from configurations.env_configs import SOCIAL_INTERESTS_URI, EVENT_TYPES_URI
+
 
 def interests_sim(id):
 	df_new = _matrix()
@@ -27,10 +27,10 @@ def interests_sim(id):
 	return df_new.ix[List][['V2', 'count_of_interests']]#['V2']
 
 
-def interests_sim_with_loc(id, location):
+def interests_sim_with_loc(id, location, uri):
 	# df_new = _matrix_with_loc(location)
 	# df_profile_t = df_new[df_new.columns[14:]]
-	df_new = _interests_matrix_with_loc(location)
+	df_new = _interests_matrix_with_loc(location, uri)
 	df_profile_t = df_new[df_new.columns[2:]]
 
 	index = _index_of(id, df_new)
@@ -43,12 +43,13 @@ def interests_sim_with_loc(id, location):
 	gc.collect()
 
 	sim = pd.Series(p_r)
-	df_new['count_of_interests'] = (1 - sim.values) * len(df_profile_t.columns)
-	df_new['count_of_interests'] = df_new['count_of_interests'].astype(int)
-	List = [i[0] for i in sorted(enumerate(p_r), key=lambda x:x[1])][0:21]
-
-	return df_new.ix[List][['account_id', 'count_of_interests']]#['V2']
-
+	df_new['interest_similarity'] = 1 - sim.values
+	df_new['interest_count'] = (1 - sim.values) * len(df_profile_t.columns)
+	df_new['interest_count'] = df_new['interest_count'].astype(int)
+	
+	# List = [i[0] for i in sorted(enumerate(p_r), key=lambda x:x[1])][0:21]
+	# return df_new.ix[List][['account_id', 'interest_count']]#['V2']
+	return df_new
 
 def events_sim(id):
 	df_new = _matrix()
@@ -75,8 +76,8 @@ def events_sim(id):
 	return df_new.ix[List][['V2', 'similarity_percentage']]#['V2']
 
 
-def events_sim_with_loc(id, location):
-	df_new = _events_matrix_with_loc(location)
+def events_sim_with_loc(id, location, uri):
+	df_new = _events_matrix_with_loc(location, uri)
 	df_event_t = df_new[df_new.columns[2:]]
 
 	index = _index_of(id, df_new)
@@ -164,26 +165,33 @@ def _datasets_path():
 	return os.path.abspath("") + "/datasets/"
 
 
-def _social_interests_data():
-	print ("Sending request to:", SOCIAL_INTERESTS_URI)
-	request=Request(SOCIAL_INTERESTS_URI)
-	profiles = json.loads(urlopen(request).read())
-	df = pd.DataFrame(profiles)
-	print df.shape
+# def _social_interests_data():
+# 	print ("Sending request to:", SOCIAL_INTERESTS_URI)
+# 	request=Request(SOCIAL_INTERESTS_URI)
+# 	profiles = json.loads(urlopen(request).read())
+# 	df = pd.DataFrame(profiles)
+# 	print df.shape
+# 	return df
+
+
+# def _event_types_data():
+# 	print ("Sending request to:", EVENT_TYPES_URI)
+# 	request=Request(EVENT_TYPES_URI)
+# 	events = json.loads(urlopen(request).read())
+# 	df = pd.DataFrame(events)
+# 	print df.shape
+# 	return df
+
+def _request_data(uri):
+	print ("Sending request to:", uri)
+	request=Request(uri)
+	data = json.loads(urlopen(request).read())
+	df = pd.DataFrame(data)
+	print ("Data shape:", df.shape)
 	return df
 
-
-def _event_types_data():
-	print ("Sending request to:", EVENT_TYPES_URI)
-	request=Request(EVENT_TYPES_URI)
-	events = json.loads(urlopen(request).read())
-	df = pd.DataFrame(events)
-	print df.shape
-	return df
-
-
-def _interests_matrix_with_loc(location):
-	df_profile = _social_interests_data()
+def _interests_matrix_with_loc(location, uri):
+	df_profile = _request_data(uri)
 	df_profile[['account_id']] = df_profile[['account_id']].astype(int)
 	df_profile['location'].fillna('empty', inplace=True)
 	df_profile_t = pd.pivot_table(df_profile, index=['account_id', 'location'], columns=['social'], values='indicator')
@@ -205,8 +213,8 @@ def _interests_matrix_with_loc(location):
 	return df_profile_s
 
 
-def _events_matrix_with_loc(location):
-	df_event = _event_types_data()
+def _events_matrix_with_loc(location, uri):
+	df_event = _request_data(uri)
 	df_event[['account_id']] = df_event[['account_id']].astype(int)
 	df_event[['count']] = df_event[['count']].astype(int)
 	df_event[['event_type']] = df_event[['event_type']].astype(int)
