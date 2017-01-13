@@ -8,6 +8,7 @@ from flask import Flask
 def create_app():
     from api.similarity import similarity_api
     from api.mutual_friend import mutual_friend_api
+    from api.job_api import job_api
     from views.index import index_view
 
     app = Flask(__name__)
@@ -20,6 +21,7 @@ def create_app():
 
     app.register_blueprint(similarity_api.blueprint, url_prefix='/api')
     app.register_blueprint(mutual_friend_api.blueprint, url_prefix='/api')
+    app.register_blueprint(job_api.blueprint, url_prefix='/api')
     app.register_blueprint(index_view)
 
     handler = StreamHandler(stdout)
