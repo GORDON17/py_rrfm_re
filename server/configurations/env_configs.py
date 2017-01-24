@@ -5,7 +5,8 @@ SOCIAL_INTERESTS_URI = BASE_URI + "api/v4/re/interests/social"
 BUSINESS_INTERESTS_URI = BASE_URI + "api/v4/re/interests/business"
 LIFESTYLE_INTERESTS_URI = BASE_URI + "api/v4/re/interests/lifestyle"
 EVENT_TYPES_URI = BASE_URI + "api/v4/re/events/types"
-CONNECTIONS_URI = "api/v4/re/connections"
+CONNECTIONS_URI = BASE_URI + "api/v4/re/connections"
+ACCOUNTS_URI = BASE_URI + "api/v4/re/accounts"
 
 INTEREST_TYPES = {
 	'social': 'social',

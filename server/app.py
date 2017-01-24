@@ -6,8 +6,8 @@ from flask import Flask
 # from pymongo import MongoClient
 
 def create_app():
-    from api.similarity import similarity_api
-    from api.mutual_friend import mutual_friend_api
+    from api.similarity_api import similarity_api
+    from api.mutual_friend_api import mutual_friend_api
     from api.job_api import job_api
     from views.index import index_view
 

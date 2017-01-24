@@ -33,7 +33,88 @@ def _request_data(uri):
     return data
 
 
-def graph(uri):
+# def graph(uri):
+#     hash = dict()
+#     connections = _request_data(uri)
+#     for connection in connections:
+#         account_id = int(connection['account_id'])
+#         requestor_id = int(connection['requestor_id'])
+
+#         if account_id in hash.keys():
+#             hash[account_id]['connections'].append(requestor_id)
+#         else:
+#             connections1 = []
+#             connections1.append(requestor_id)
+#             hash[account_id] = {'connections': connections1}
+
+#         if requestor_id in hash.keys():
+#             hash[requestor_id]['connections'].append(account_id)
+#         else:
+#             connections2 = []
+#             connections2.append(account_id)
+#             hash[requestor_id] = {'connections': connections2}
+
+#     return hash
+
+
+def _neighbours(graph, user_id):
+    if user_id in graph.keys():
+        return graph[user_id]['connections']
+    else:
+        return set()
+
+
+# def bfs(graph, user_id):
+#     count = 0
+#     commons = {}
+#     visited, queue = set(), []
+#     visited.add(user_id)
+#     friends = _neighbours(graph, user_id)
+#     queue = _enqueue(queue, visited, friends, 0)
+
+#     while queue:
+#         current = queue.pop(0)
+
+#         if current['id'] not in visited:
+#             count += 1
+#             visited.add(current['id'])
+#             connections = _neighbours(graph, current['id'])
+#             if connections is not None:
+#                 queue = _enqueue(queue, visited, connections,
+#                                  current['level'] + 1)
+
+#                 if current['id'] not in friends:
+#                     mutuals = _common_friends(graph, user_id, current['id'])
+#                     commons[current['id']] = {
+#                         # 'email': graph[current['id']]['email'],
+#                         'parent': user_id,
+#                         # 'commons': mutuals,
+#                         'level': current['level'],
+#                         'num_of_commons': len(mutuals)
+#                     }
+#     print count
+#     return sorted(commons.items(), key=lambda x: (x[1]['num_of_commons'], -x[1]['level']), reverse=True)[0:20]
+
+
+def _common_friends(graph, user1, user2):
+    a = _neighbours(graph, user1)
+    b = _neighbours(graph, user2)
+
+    return set(a).intersection(b)
+
+
+def _enqueue(queue, visited, arr, level):
+    for i in arr:
+        if i not in visited:
+            queue.append({'id': i, 'level': level})
+    return queue
+
+
+
+from account_service import *
+from collections import OrderedDict
+
+def _graph(uri):
     hash = dict()
     connections = _request_data(uri)
     for connection in connections:
@@ -57,15 +138,7 @@ def graph(uri):
     return hash
 
 
-def _neighbours(graph, user_id):
-    if user_id in graph.keys():
-        return graph[user_id]['connections']
-    else:
-        return set()
-
-
-def bfs(graph, user_id):
-    count = 0
+def _bfs(graph, user_id):
     commons = {}
     visited, queue = set(), []
     visited.add(user_id)
@@ -76,14 +149,13 @@ def bfs(graph, user_id):
         current = queue.pop(0)
 
         if current['id'] not in visited:
-            count += 1
             visited.add(current['id'])
             connections = _neighbours(graph, current['id'])
             if connections is not None:
                 queue = _enqueue(queue, visited, connections,
                                  current['level'] + 1)
 
-                if current['id'] not in friends:
+                if current['id'] not in friends and current['level'] < 6:
                     mutuals = _common_friends(graph, user_id, current['id'])
                     commons[current['id']] = {
                         # 'email': graph[current['id']]['email'],
@@ -92,20 +164,16 @@ def bfs(graph, user_id):
                         'level': current['level'],
                         'num_of_commons': len(mutuals)
                     }
-    print count
-    return sorted(commons.items(), key=lambda x: (x[1]['num_of_commons'], -x[1]['level']), reverse=True)[0:20]
+    return OrderedDict(sorted(commons.items(), key=lambda x: (x[1]['num_of_commons'], -x[1]['level']), reverse=True)[0:20])
 
+from mongodb import update_mutual_friend_recommendations
 
-def _common_friends(graph, user1, user2):
-    a = _neighbours(graph, user1)
-    b = _neighbours(graph, user2)
+def process_mutual_friends(uri):
+    networks = _graph(uri)
 
-    return set(a).intersection(b)
-
-
-def _enqueue(queue, visited, arr, level):
-    for i in arr:
-        if i not in visited:
-            queue.append({'id': i, 'level': level})
-    return queue
+    for key, value in networks.iteritems():
+        print("processing mutual friends for account: ", key)
+        best_recommendations = _bfs(networks, key)
+        update_mutual_friend_recommendations(best_recommendations)
+        print("finished mutual friends for account: ", key)
 

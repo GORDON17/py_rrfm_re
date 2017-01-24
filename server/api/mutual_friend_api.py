@@ -15,6 +15,15 @@ class BFSAPI(Resource):
 			results = bfs(g, id)
 			return json.dumps(results)
 
+@mutual_friend_api.resource("/mutualtesting")
+class BFSAPITest(Resource):
+    @staticmethod
+    def get():
+			process_mutual_friends(CONNECTIONS_URI)
+			return "mutual friend testing done."
+
+			
+
 @mutual_friend_api.resource("/collections")
 class DBCollections(Resource):
     @staticmethod

@@ -3,6 +3,7 @@ from mongoengine import connect
 
 def connect_db():
   ENV = os.environ.get('SERVER_ENV')
+  print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), datetime.now().strftime("%A"))
   if ENV != "production":
     from configurations.development import MONGO_URI, MONGO_DBNAME
     connect(
@@ -107,12 +108,13 @@ def update_interests_table(id, df, type):
 																set__lifestyle_interest_similarity=interest_similarity) \
 												.save()
 
-	print ("Updated:", InterestSimilarity.objects.count())
+	# print ("Updated:", InterestSimilarity.objects.count())
 
 
 def add_job(job_id, name):
 	print('starting saving job')
-	new_job = Job(job_id=job_id, name=name, state=0, duration=0, created_at=datetime.now())
+	time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+	new_job = Job(job_id=job_id, name=name, state=0, duration=0, created_at=time_now)
 	new_job.save() 
 
 	# new_job = Job.objects(job_id=job_id,
@@ -133,16 +135,44 @@ def add_job(job_id, name):
 def update_job_state(job_obj_id, state):
 	print "updating job"
 	job = Job.objects.with_id(job_obj_id)
-	dt = datetime.now() - job.created_at
+	time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+	dt = datetime.strptime(time_now, "%Y-%m-%d %H:%M:%S") - job.created_at
 	duration = dt.seconds
-	print job.id
+
 	try:
 		job.state = state
 		job.duration = duration
+		job.ended_at = time_now
 		job.save()
 		print('Job: ' + str(job.name) + ', state: ' + str(job.state) + ', duration: ' + str(job.duration))
 	except:
 		print('ERROR!')
+
+
+def get_jobs():
+	jobs = Job.objects
+	print jobs
+	job_list = []
+	for job in jobs:
+		job_list.append(job.to_json())
+
+	return job_list
+
+from models.mutual_friend import MutualFriend
+
+def update_mutual_friend_recommendations(commons):
+	for key, value in commons.iteritems():
+		MutualFriend.objects(account_id=value['parent'],
+												 user_id=key) \
+									.modify(upsert=True, 
+													new=True, 
+													set__connection_level=value['level'],
+													set__num_of_mutual_friends=value['num_of_commons']) \
+									.save()
+
+
+
+
 
 
 

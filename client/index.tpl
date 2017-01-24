@@ -17,7 +17,7 @@
         height: 100%;
       }
     </style>
-    <title><%= htmlWebpackPlugin.options.title || 'Flask React Boilerplate' %></title>
+    <title>Recommendation Engine</title>
   </head>
   <body>
     <div class="root" id="root"></div>
