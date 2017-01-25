@@ -48,23 +48,13 @@ class JobStartAPI(Resource):
 			except:
 				return {'status': 400, 'message': 'The scheduler is failed to start.'}
 
-@job_api.resource("/printjobs")
-class PrintJobsAPI(Resource):
-    @staticmethod
-    def get():
-			try:
-				sched.print_jobs()
-				return {'status': 200, 'message': 'Printed'}
-			except:
-				return {'status': 400, 'message': 'Cannot print jobs'}
-
 
 @job_api.resource("/stopsched")
 class JobStopAPI(Resource):
     @staticmethod
     def get():
 			try:
-				sched.shutdown(wait=False)
+				s.shutdown(wait=False)
 				return {'status': 200, 'message': 'The scheduler is shutdown.'}
 			except SchedulerNotRunningError, e:
 				return {'status': 400, 'message': str(e)}
