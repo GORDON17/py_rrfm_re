@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import SideBar from '../SideBar/SideBar';
-import Panel from '../Panel/Panel';
-
 import { connect } from 'react-redux';
 
-class App extends Component {
+import Footer from '../Footer/Footer';
+import NavBar from '../NavBar/NavBar';
+
+class Panel extends Component {
   componentDidMount() {
     /* init data here */
   }
 
   render() {
     return (
-      <div className="wrapper">
-        <SideBar></SideBar>
-        <Panel></Panel>
-        
+      <div className="main-panel">
+        <NavBar></NavBar>
+        <Footer></Footer>
       </div>
     );
   }
@@ -40,4 +39,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Panel);

@@ -34,7 +34,12 @@ config = update(config, {
     $push: [
       new CleanWebpackPlugin([SCRIPTS_PATH, TEMPLATES_PATH]),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({ output: { comments: false } }),
+      new webpack.optimize.UglifyJsPlugin({ 
+        comments: false,
+        compress: {
+          warnings: false
+        }
+      }),
       new HtmlWebpackPlugin({
         inject: true,
         filename: '../../templates/index.html',
@@ -46,7 +51,7 @@ config = update(config, {
   module: {
     loaders: {
       $push: [
-        { test: /\.jsx?$/, loaders: ['babel'], exclude: /node_modules/ }
+        { test: /\.(js|jsx)?$/, loaders: ['babel'], exclude: /node_modules/ }
       ]
     }
   }

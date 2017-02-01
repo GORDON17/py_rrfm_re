@@ -28,9 +28,8 @@ config = update(config, {
 
   output: {
     $set: {
-      path: path.join(process.cwd(), '/dev/static/scripts'),
-      pathInfo: true,
-      publicPath: 'http://localhost:3000/static/scripts/',
+      path: path.join(__dirname, 'dev/static/scripts'),
+      publicPath: '/static/scripts/',
       filename: 'main.js'
     }
   },
@@ -50,7 +49,7 @@ config = update(config, {
   module: {
     loaders: {
       $push: [
-        { test: /\.jsx?$/, loaders: [ 'babel' ], exclude: /node_modules/ }
+        { test: /\.(js|jsx)?$/, loaders: [ 'babel' ], exclude: /node_modules/ }
       ]
     }
   },
@@ -74,12 +73,12 @@ config = update(config, {
       historyApiFallback: true,
 
       headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3001',
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
         'Access-Control-Allow-Headers': 'X-Requested-With'
       },
 
       proxy: {
-        '/api/*': 'http://localhost:3001'
+        '/api/*': 'http://localhost:3000'
       }
     }
   }

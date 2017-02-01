@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
-import SideBar from '../SideBar/SideBar';
-import Panel from '../Panel/Panel';
-
 import { connect } from 'react-redux';
 
-class App extends Component {
+class Footer extends Component {
   componentDidMount() {
     /* init data here */
   }
 
   render() {
     return (
-      <div className="wrapper">
-        <SideBar></SideBar>
-        <Panel></Panel>
-        
-      </div>
+      <footer className="footer">
+        <div className="container-fluid">
+          <p className="copyright pull-right">
+              © 2017 <a href="https://www.ivy.com/">IVY</a>
+          </p>
+        </div>
+      </footer>
     );
   }
 }
@@ -40,4 +39,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Footer);

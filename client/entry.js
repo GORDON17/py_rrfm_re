@@ -1,6 +1,13 @@
 'use strict';
 import 'babel-polyfill';
 
+import '../assets/css/index.scss';
+
+// import '../assets/js/index.js';
+import '../assets/js/bootstrap.min.js';
+import '../assets/js/light-bootstrap-dashboard.js';
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import jss from 'jss';

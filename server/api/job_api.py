@@ -8,7 +8,7 @@ from configurations.env_configs import *
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-s = BackgroundScheduler()
+scheduler = BackgroundScheduler()
 # sched = Scheduler(s)
 
 job_api = Api(Blueprint('job_api', __name__))
@@ -28,20 +28,20 @@ class JobStartAPI(Resource):
 			print(day, hour, minute)
 			try:
 				# global sched
-				global s
-				s.add_job(interest_similarity_job, 'cron', 
+				global scheduler
+				scheduler.add_job(interest_similarity_job, 'cron', 
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='0',
 												name='social_interest_similarity')
-				s.add_job(mutual_friends_job, 'cron', 
+				scheduler.add_job(mutual_friends_job, 'cron', 
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='1',
 												name='mutual_friend')
-				s.start()
+				scheduler.start()
 				# sched.schedule_jobs(day_of_week=2, hour=9, minute=33)
 				# sched.start()
 				return {'status': 200, 'message': 'The scheduler is running.'}
@@ -54,7 +54,7 @@ class JobStopAPI(Resource):
     @staticmethod
     def get():
 			try:
-				s.shutdown(wait=False)
+				scheduler.shutdown(wait=False)
 				return {'status': 200, 'message': 'The scheduler is shutdown.'}
 			except SchedulerNotRunningError, e:
 				return {'status': 400, 'message': str(e)}

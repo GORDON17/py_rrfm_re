@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
-import SideBar from '../SideBar/SideBar';
-import Panel from '../Panel/Panel';
-
 import { connect } from 'react-redux';
 
-class App extends Component {
+class Content extends Component {
   componentDidMount() {
     /* init data here */
   }
 
   render() {
     return (
-      <div className="wrapper">
-        <SideBar></SideBar>
-        <Panel></Panel>
-        
+      <div className="content">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="card">
+                <div className="content">
+                  <div className="fresh-datatables">
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -40,4 +47,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(Content);
