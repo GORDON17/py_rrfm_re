@@ -11,7 +11,7 @@ class NavBar extends Component {
       <nav className="navbar navbar-default">
           <div className="container-fluid">
             <div className="navbar-minimize">
-              <button id="minimizeSidebar" className="btn btn-warning btn-fill btn-round btn-icon">
+              <button id="minimizeSidebar" className="btn btn-danger btn-fill btn-round btn-icon">
                 <i className="fa fa-ellipsis-v visible-on-sidebar-regular"></i>
                 <i className="fa fa-navicon visible-on-sidebar-mini"></i>
               </button>

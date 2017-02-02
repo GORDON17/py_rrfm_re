@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import SideBar from '../SideBar/SideBar';
 import Panel from '../Panel/Panel';
-
-import { connect } from 'react-redux';
 
 class App extends Component {
   componentDidMount() {
@@ -14,7 +14,6 @@ class App extends Component {
       <div className="wrapper">
         <SideBar></SideBar>
         <Panel></Panel>
-        
       </div>
     );
   }

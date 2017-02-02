@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Footer from '../Footer/Footer';
 import NavBar from '../NavBar/NavBar';
-
+import Content from '../Content/Content';
 class Panel extends Component {
   componentDidMount() {
     /* init data here */
@@ -13,6 +13,7 @@ class Panel extends Component {
     return (
       <div className="main-panel">
         <NavBar></NavBar>
+        <Content></Content>
         <Footer></Footer>
       </div>
     );

@@ -11,7 +11,7 @@ class SideBar extends Component {
   render() {
     return (
       <div className="sidebar" data-color="black">
-        <div className="logo">
+        {/*<div className="logo">
           <img className="logo-image" src={ivyLogo} alt="Logo"/>
           <a href="http://www.ivy.com" className="logo-text" style={{'textAlign': 'left'}}>
               IVY
@@ -21,8 +21,18 @@ class SideBar extends Component {
           <a href="http://www.ivy.com" className="logo-text">
               <img className="logo-image" src={ivyLogo} alt="Logo" style={{'float':'none'}}/>
           </a>
-        </div>
+        </div>*/}
         <div className="sidebar-wrapper">
+          <div className="user">
+                <div className="photo">
+                    <img src={ivyLogo}/>
+                </div>
+                <div className="info">
+                    <a data-toggle="collapse" href="http://www.ivy.com" className="collapsed">
+                        <span style={{'fontSize': '1.5em'}}>IVY</span>
+                    </a>
+                </div>
+            </div>
           <ul className="nav">
             <li className="active">
               <a href="../dashboard.html">

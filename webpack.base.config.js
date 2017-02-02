@@ -11,6 +11,7 @@ module.exports = {
     modulesDirectories: [
       'web_modules',
       'node_modules',
+      'client',
       'assets'
     ],
     extensions: ['', '.js', '.jsx', '.scss']
