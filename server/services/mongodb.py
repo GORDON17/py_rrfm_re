@@ -1,5 +1,5 @@
 import os
-from mongoengine import connect
+from mongoengine.connection import (connect, disconnect)
 
 def connect_db():
   ENV = os.environ.get('SERVER_ENV')
@@ -21,6 +21,8 @@ def connect_db():
     print "Mongodb(production) is runing on: "
     print MONGO_URI
 
+def disconnect_db():
+	disconnect()
 
 from datetime import datetime
 # from pymongo import MongoClient
@@ -150,12 +152,15 @@ def update_job_state(job_obj_id, state):
 
 
 def get_jobs():
+	connect_db()
+	print 'receiving jobs ...'
 	jobs = Job.objects
-	print jobs
+
 	job_list = []
 	for job in jobs:
 		job_list.append(job.to_json())
 
+	disconnect_db()
 	return job_list
 
 from models.mutual_friend import MutualFriend

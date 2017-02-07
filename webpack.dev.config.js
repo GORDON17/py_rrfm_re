@@ -13,7 +13,9 @@ if (process.env.NODE_ENV !== 'test') {
       $set: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/dev-server',
-        './client/entry'
+        './assets/css/index.scss',
+        './client/entry',
+        './assets/js/index.js'
       ]
     }
   });
@@ -78,7 +80,7 @@ config = update(config, {
       },
 
       proxy: {
-        '/api/*': 'http://localhost:3000'
+        '/api/*': 'http://localhost:8000'
       }
     }
   }

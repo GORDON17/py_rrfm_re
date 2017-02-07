@@ -4544,7 +4544,7 @@ h1 .subtitle {
 .sidebar-wrapper,
 .navbar-fixed {
   -webkit-transition-property: top,bottom,width;
-  transition-property: top,bottom, width;
+  transition-property: top, bottom, width;
   -webkit-transition-duration: .2s,.2s, .35s;
   transition-duration: .2s,.2s, .35s;
   -webkit-transition-timing-function: linear,linear,ease;
@@ -9503,4 +9503,22 @@ star {
 }
 .content-full-width .tab-pane {
   padding: 15px;
+}
+
+
+
+
+
+/* Customized CSS */
+.top-fixed-navbar {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  z-index: 1;
+  right: 0;
+  width: inherit;
+}
+
+#main-content {
+  margin-top: 64px;
 }

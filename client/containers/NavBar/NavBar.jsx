@@ -8,7 +8,7 @@ class NavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar navbar-default top-fixed-navbar">
           <div className="container-fluid">
             <div className="navbar-minimize">
               <button id="minimizeSidebar" className="btn btn-danger btn-fill btn-round btn-icon">
@@ -23,13 +23,13 @@ class NavBar extends Component {
                 <span className="icon-bar"></span>
                 <span className="icon-bar"></span>
               </button>
-              <a className="navbar-brand" href="#">Dashboard</a>
+              {/*<a className="navbar-brand" href="/">Dashboard</a>*/}
             </div>
             <div className="collapse navbar-collapse">
 
               <ul className="nav navbar-nav navbar-right">
                 <li>
-                  <a href="charts.html">
+                  <a href="#">
                     <i className="fa fa-line-chart"></i>
                     <p>Stats</p>
                   </a>

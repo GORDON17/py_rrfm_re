@@ -1,3 +1,5 @@
+'use strict';
+
 var webpack = require('webpack');
 var path = require('path');
 
@@ -18,12 +20,10 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.DefinePlugin({
-      NODE_ENV: process.env.NODE_ENV
-    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
+      jQuery: 'jquery',
+      Immutable: 'immutable'
     })
   ],
 
@@ -33,7 +33,7 @@ module.exports = {
       { test: /\.(png|jpg|jpeg)$/, loader: 'file' },
       { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file' }
     ],
-    noParse: /\.min\.js\/node_modules/
+    noParse: /node_modules\/dist\/dev\/static/
   }
 
 };

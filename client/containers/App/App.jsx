@@ -1,19 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import SideBar from '../SideBar/SideBar';
-import Panel from '../Panel/Panel';
+import Footer from '../Footer/Footer';
+import NavBar from '../NavBar/NavBar';
 
 class App extends Component {
   componentDidMount() {
-    /* init data here */
+    /* init data from remote api here, dispatch init actions */
+    
   }
 
   render() {
     return (
       <div className="wrapper">
         <SideBar></SideBar>
-        <Panel></Panel>
+        <div className="main-panel">
+          <NavBar></NavBar>
+          <div id="main-content" className="content">
+            {this.props.children}
+          </div>
+          <Footer></Footer>
+        </div>
       </div>
     );
   }
@@ -26,17 +34,20 @@ function mapStateToProps(state) {
   };
 }
 
-/* Map actions here */
-// canvasActions: bindActionCreators(CanvasActions, dispatch)
-function mapDispatchToProps(dispatch) {
-  return {
+// /* Map actions here */
+// // canvasActions: bindActionCreators(CanvasActions, dispatch)
+// function mapDispatchToProps(dispatch) {
+//   return {
     
-  };
+//   };
+// }
+
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired
 }
 
-
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
+  // mapStateToProps,
+  // mapDispatchToProps
 )(App);

@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+
 import sidebarBGI from '../../../assets/img/full-screen-image-3.jpg';
 import ivyLogo from '../../../assets/img/ivy-logo.png';
 
 class SideBar extends Component {
   componentDidMount() {
     /* init data here */
+
+    $(".nav a").on("click", function(){
+      $(".nav").find(".active").removeClass("active");
+      $(this).parent().addClass("active");
+    });
   }
 
   render() {
@@ -35,18 +42,26 @@ class SideBar extends Component {
             </div>
           <ul className="nav">
             <li className="active">
-              <a href="../dashboard.html">
+              <Link to="/">
                 <i className="pe-7s-graph"></i>
                 <p>Dashboard</p>
-              </a>
+              </Link>
             </li>
 
             <li>
-              <a href="../charts.html">
+              <Link to="/jobs">
+                <i className="pe-7s-alarm"></i>
+                <p>Jobs</p>
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/">
                 <i className="pe-7s-graph1"></i>
                 <p>Charts</p>
-              </a>
+              </Link>
             </li>
+
           </ul>
         </div>
         <div className="sidebar-background" style={{'backgroundImage': 'url(' + sidebarBGI+ ')'}}></div>

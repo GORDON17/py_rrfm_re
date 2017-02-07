@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-// import kittens from './kittens';
+import jobsReducer from './JobsReducer';
 
 const reducers = combineReducers({
-  // kittens
+  jobsReducer
 });
 
 export default reducers;

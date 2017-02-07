@@ -1,10 +1,6 @@
 'use strict';
 import 'babel-polyfill';
 
-import '../assets/css/index.scss';
-
-import '../assets/js/index.js';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import jss from 'jss';
@@ -14,6 +10,10 @@ import jssNested from 'jss-nested';
 import jssCamelCase from 'jss-camel-case';
 import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
+
+// import '../assets/css/index.scss';
+import './styles/custom.scss';
+// import '../assets/js/index.js';
 
 import configureStore from './store/configureStore';
 import AppRoutes from './routes';

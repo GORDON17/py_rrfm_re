@@ -4,7 +4,7 @@ import createLogger from 'redux-logger';
 import promise from 'redux-promise';
 
 // import api from '../middleware/api';    ???????????
-import reducers from '../reducers';  //??????????
+import reducers from '../reducers/index';  //??????????
 
 const finalCreateStore = compose(
   applyMiddleware(thunk,
