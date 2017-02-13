@@ -148,7 +148,7 @@ def _bfs(graph, user_id):
     while queue:
         current = queue.pop(0)
 
-        if current['id'] not in visited:
+        if current['id'] not in visited:  # add location check here
             visited.add(current['id'])
             connections = _neighbours(graph, current['id'])
             if connections is not None:

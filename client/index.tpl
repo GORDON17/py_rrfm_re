@@ -6,6 +6,7 @@
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Arizonia" rel="stylesheet">
     <style>
       html, body {
         width: 100%;

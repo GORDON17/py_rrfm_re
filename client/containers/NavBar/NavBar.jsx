@@ -8,10 +8,10 @@ class NavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default top-fixed-navbar">
+      <nav className="navbar navbar-default top-fixed-navbar" style={{'backgroundColor': ''}}>
           <div className="container-fluid">
             <div className="navbar-minimize">
-              <button id="minimizeSidebar" className="btn btn-danger btn-fill btn-round btn-icon">
+              <button id="minimizeSidebar" className="btn btn-neutral btn-fill btn-round btn-icon">
                 <i className="fa fa-ellipsis-v visible-on-sidebar-regular"></i>
                 <i className="fa fa-navicon visible-on-sidebar-mini"></i>
               </button>
@@ -29,7 +29,7 @@ class NavBar extends Component {
 
               <ul className="nav navbar-nav navbar-right">
                 <li>
-                  <a href="#">
+                  <a href="/dashboard" style={{'color': '#2196F3'}}>
                     <i className="fa fa-line-chart"></i>
                     <p>Stats</p>
                   </a>

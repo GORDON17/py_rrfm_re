@@ -11,7 +11,7 @@ class Footer extends Component {
       <footer className="footer">
         <div className="container-fluid">
           <p className="copyright pull-right">
-              © 2017 <a href="https://www.ivy.com/">IVY</a>
+              © 2017 <a href="https://www.ivy.com/" style={{'color': '#FFDF00'}}>IVY</a>
           </p>
         </div>
       </footer>

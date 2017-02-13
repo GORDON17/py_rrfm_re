@@ -7,6 +7,7 @@ LIFESTYLE_INTERESTS_URI = BASE_URI + "api/v4/re/interests/lifestyle"
 EVENT_TYPES_URI = BASE_URI + "api/v4/re/events/types"
 CONNECTIONS_URI = BASE_URI + "api/v4/re/connections"
 ACCOUNTS_URI = BASE_URI + "api/v4/re/accounts"
+MONTH_COUNT_URI = BASE_URI + "api/v4/re/month-count"
 
 INTEREST_TYPES = {
 	'social': 'social',

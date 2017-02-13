@@ -35,14 +35,14 @@ class SideBar extends Component {
                     <img src={ivyLogo}/>
                 </div>
                 <div className="info">
-                    <a data-toggle="collapse" href="http://www.ivy.com" className="collapsed">
-                        <span style={{'fontSize': '1.5em'}}>IVY</span>
+                    <a data-toggle="collapse" href={"http://www.ivy.com"} className="collapsed" target="_blank">
+                        <span style={{'fontSize': '2.5em', 'fontFamily': 'Arizonia', 'color': '#FFDF00'}}>IVY</span>
                     </a>
                 </div>
             </div>
           <ul className="nav">
             <li className="active">
-              <Link to="/">
+              <Link to="/dashboard">
                 <i className="pe-7s-graph"></i>
                 <p>Dashboard</p>
               </Link>
@@ -56,7 +56,7 @@ class SideBar extends Component {
             </li>
 
             <li>
-              <Link to="/">
+              <Link to="/charts">
                 <i className="pe-7s-graph1"></i>
                 <p>Charts</p>
               </Link>

@@ -11,13 +11,13 @@ function getJobs() {
 	return dispatch => 
 		fetch("api/jobs")
 			.then(response =>	response.json() )
-			.then(json => dispatch(receiveJobs(json)) );
+			.then(json => dispatch(receiveJobs(json)) )
 }
 
 export function receiveJobs(jobs) {
-	console.log('receiving jobs ...')
+	console.log('receiving jobs ...');
 	return {
 		type: actions.RECEIVE_JOBS,
 		jobs
-	}
+	};
 }

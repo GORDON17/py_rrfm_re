@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'test') {
   config = update(config, {
     entry: {
       $set: [
-        'webpack-dev-server/client?http://localhost:3000',
+        'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/dev-server',
         './assets/css/index.scss',
         './client/entry',
@@ -60,7 +60,7 @@ config = update(config, {
     $set: {
       publicPath: '/static/scripts/',
 
-      port: 3000,
+      port: 8080,
 
       contentBase: './dev',
 
@@ -75,7 +75,7 @@ config = update(config, {
       historyApiFallback: true,
 
       headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
+        'Access-Control-Allow-Origin': 'http://localhost:8080',
         'Access-Control-Allow-Headers': 'X-Requested-With'
       },
 

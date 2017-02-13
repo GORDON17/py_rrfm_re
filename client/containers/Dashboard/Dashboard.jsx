@@ -2,48 +2,50 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import JobList from '../../components/JobList';
+import * as DashboardActions from '../../actions/DashboardActions';
+import Count from '../../components/Dashboard/Count'
+import Price from '../../components/Dashboard/Price'
 
 class Dashboard extends Component {
   componentDidMount() {
     /* init data here */
-    this.props.DashboardActions.initDahsboard();
+    this.props.DashboardActions.initDashboard();
   }
 
   render() {
-    const jobs = this.props.monthCount;
+    const {monthCount, ticketPrices} = this.props;
 
     return (
       <div className="container-fluid">
+        <div className="alert alert-success" style={{'textAlign': 'center', 'fontWeight': 'bold'}}>
+            <span>Good strategies will defeat every other opponent. Technologies change everything.</span>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="card">
-              <div className="content">
-                <div className="fresh-datatables">
-                  <div id="datatables_wrapper" className="dataTables_wrapper form-inline dt-bootstrap">
-                    <div className="row">
-                      <div className="col-sm-12 table-outter">
-                        <JobList jobs={jobs}></JobList>
-                      </div>
-                    </div>
-                  {/*<div class="row">
-                  <div class="col-sm-5">
-                  <div class="dataTables_info" id="datatables_info" role="status" aria-live="polite">Showing 1 to 10 of 40 entries</div>
+              <div className="content">  
+                <div className="row table-outter">
+                  <Count data={monthCount}></Count>
+                  <div className="notes">
+                    <ul>Strategies: 
+                      <li>3,4,5,9,10,11 are better to create more events. 6,7,8 are too hot? 12,1,2 are too cold?! come up a strategy to solve the issues.</li> 
+                      <li>Push more ADs in 6,12.</li> 
+                    </ul>
                   </div>
-                  <div class="col-sm-7">
-                  <div class="dataTables_paginate paging_full_numbers" id="datatables_paginate">
-                  <ul class="pagination">
-                  <li class="paginate_button first disabled" id="datatables_first">
-                  <a href="#" aria-controls="datatables" data-dt-idx="0" tabindex="0">First</a>
-                  </li>
-                  <li class="paginate_button previous disabled" id="datatables_previous">
-                  <a href="#" aria-controls="datatables" data-dt-idx="1" tabindex="0">Previous</a>
-                  </li>
-                  <li class="paginate_button active">
-                  <a href="#" aria-controls="datatables" data-dt-idx="2" tabindex="0">1</a></li><li class="paginate_button "><a href="#" aria-controls="datatables" data-dt-idx="3" tabindex="0">2</a></li><li class="paginate_button "><a href="#" aria-controls="datatables" data-dt-idx="4" tabindex="0">3</a></li><li class="paginate_button "><a href="#" aria-controls="datatables" data-dt-idx="5" tabindex="0">4</a></li><li class="paginate_button next" id="datatables_next"><a href="#" aria-controls="datatables" data-dt-idx="6" tabindex="0">Next</a></li><li class="paginate_button last" id="datatables_last"><a href="#" aria-controls="datatables" data-dt-idx="7" tabindex="0">Last</a></li></ul>
-                  </div>
-                  </div>
-                  </div>*/}
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <div className="content">  
+                <div className="row table-outter">
+                  <Price data={ticketPrices}></Price>
+                  <div className="notes">
+                    <ul>Strategies: 
+                      <li>Optimize the price strategy.</li> 
+                      <li>Avoid the bad prices such as 55,65 because 60 is better.</li> 
+                      <li>The rate of attendence is better when it is higher. Need more analysis based on the costs and profit.</li> 
+                      <li>The price of social talk events are better at 80 rather than 75.</li> 
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -56,13 +58,15 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  monthCount: PropTypes.array
+  monthCount: PropTypes.array,
+  ticketPrices: PropTypes.array
 }
 
 /* Pass state to its component here */
 function mapStateToProps(state) {
   return {
-    monthCount: state.dashboardReducer.monthCount
+    monthCount: state.dashboardReducer.monthCount,
+    ticketPrices: state.dashboardReducer.ticketPrices
   };
 }
 
@@ -70,7 +74,7 @@ function mapStateToProps(state) {
 // canvasActions: bindActionCreators(CanvasActions, dispatch)
 function mapDispatchToProps(dispatch) {
   return {
-    
+    DashboardActions: bindActionCreators(DashboardActions, dispatch)
   };
 }
 

@@ -4253,7 +4253,7 @@ h1 .subtitle {
 }
 
 .sidebar {
-  position: absolute;
+  position: fixed;  /* Customized: absolute; */
   top: 0;
   bottom: 0;
   left: 0;

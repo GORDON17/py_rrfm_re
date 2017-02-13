@@ -4,7 +4,7 @@ const initialState = {
   jobs: []
 };
 
-export default function authed(state = initialState, action) {
+export default function jobsReducer(state = initialState, action) {
 	switch (action.type) {
 		case actions.RECEIVE_JOBS:
 			return Object.assign({}, state, {
