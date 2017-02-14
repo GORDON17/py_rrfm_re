@@ -5,6 +5,7 @@ export function initDashboard() {
 	return dispatch => {
 		dispatch(getCountData());
 		dispatch(getTicketPriceData());
+		dispatch(getCategoryPriceData());
 	};
 }
 
@@ -17,7 +18,7 @@ export function receiveCount(monthCount) {
 
 function getCountData() {
 	return dispatch => 
-		fetch('http://0.0.0.0:3000/api/v4/re/month-count')//('api/dashboard/month-count')
+		fetch('http://0.0.0.0:3000/api/v4/re/month-count')
 			.then(response => response.json())
 			.then(json => dispatch(receiveCount(json)))
 }
@@ -34,4 +35,18 @@ function getTicketPriceData() {
 		fetch('http://local.ivy.com:3000/api/v4/re/ticket-prices')
 			.then(response => response.json())
 			.then(json => dispatch(receiveTicketPrice(json)))
+}
+
+export function receiveCategoryPrice(categoryPrices) {
+	return {
+		type: actions.RECEIVE_CATEGORY,
+		categoryPrices
+	};
+}
+
+function getCategoryPriceData() {
+	return dispatch => 
+		fetch('http://local.ivy.com:3000/api/v4/re/category-prices')
+			.then(response => response.json())
+			.then(json => dispatch(receiveCategoryPrice(json)))
 }

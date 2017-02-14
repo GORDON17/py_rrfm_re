@@ -13,7 +13,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const {monthCount, ticketPrices} = this.props;
+    const {monthCount, ticketPrices, categoryPrices} = this.props;
 
     return (
       <div className="container-fluid">
@@ -59,14 +59,16 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   monthCount: PropTypes.array,
-  ticketPrices: PropTypes.array
+  ticketPrices: PropTypes.array,
+  categoryPrices: PropTypes.array
 }
 
 /* Pass state to its component here */
 function mapStateToProps(state) {
   return {
     monthCount: state.dashboardReducer.monthCount,
-    ticketPrices: state.dashboardReducer.ticketPrices
+    ticketPrices: state.dashboardReducer.ticketPrices,
+    categoryPrices: state.dashboardReducer.categoryPrices
   };
 }
 
