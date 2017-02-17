@@ -67,7 +67,7 @@ config = update(config, {
     loaders: {
       $push: [
         { test: /\.(js|jsx)?$/, 
-          loaders: ['babel'], 
+          loaders: ['babel-loader'], 
           include: [ 
             path.resolve('./client'), 
             path.resolve('./assets/js')
