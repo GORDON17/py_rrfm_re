@@ -1,5 +1,5 @@
 import actions from './ActionConsts';
-const API_URI = process.config.API_URI;
+import constants from '../utils/constants'
 
 export function initDashboard() {
 	console.log('init dashboard data ... ')
@@ -19,7 +19,7 @@ export function receiveCount(monthCount) {
 
 function getCountData() {
 	return dispatch => 
-		fetch(API_URI + 'api/v4/re/month-count')
+		fetch(constants.API_URI + 'api/v4/re/month-count')
 			.then(response => response.json())
 			.then(json => dispatch(receiveCount(json)))
 }
@@ -33,7 +33,7 @@ export function receiveTicketPrice(ticketPrices) {
 
 function getTicketPriceData() {
 	return dispatch => 
-		fetch(API_URI + 'api/v4/re/ticket-prices')
+		fetch(constants.API_URI + 'api/v4/re/ticket-prices')
 			.then(response => response.json())
 			.then(json => dispatch(receiveTicketPrice(json)))
 }
@@ -47,7 +47,7 @@ export function receiveCategoryPrice(categoryPrices) {
 
 function getCategoryPriceData() {
 	return dispatch => 
-		fetch(API_URI + 'api/v4/re/category-prices')
+		fetch(constants.API_URI + 'api/v4/re/category-prices')
 			.then(response => response.json())
 			.then(json => dispatch(receiveCategoryPrice(json)))
 }
