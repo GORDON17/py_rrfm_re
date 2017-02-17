@@ -44,7 +44,8 @@ config = update(config, {
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('production'),
-          'SERVER_ENV': JSON.stringify('production')
+          'SERVER_ENV': JSON.stringify('production'),
+          'API_URI': process.env.API_URI
         }
       }),
       new webpack.optimize.DedupePlugin(),
