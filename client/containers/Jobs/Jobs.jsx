@@ -19,11 +19,17 @@ class Jobs extends Component {
         <div className="row">
           <div className="col-md-12">
             <div className="card">
-              <div className="content">
-                <div className="fresh-datatables">
+              <div className="card-header card-header-icon" data-background-color="purple">
+                  <i className="material-icons">assignment</i>
+              </div>
+
+
+              <div className="card-content">
+                <h4 className="card-title">Jobs Manager</h4>
+                <div className="material-datatables">
                   <div id="datatables_wrapper" className="dataTables_wrapper form-inline dt-bootstrap">
                     <div className="row">
-                      <div className="col-sm-12 table-outter">
+                      <div className="col-sm-12 scroll-outter">
                         <JobList jobs={jobs}></JobList>
                       </div>
                     </div>

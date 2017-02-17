@@ -2,16 +2,16 @@ import React, { PropTypes } from 'react';
 
 const JobItem = ({ job, index }) => (
   <tr role="row" key={index} className={ index % 2 == 0 ? "even" : "odd" }>
-    <td tabIndex="0" className="sorting_1">{job.job_id}</td>
+    <td>{job.job_id}</td>
     <td>{job.name}</td>
     <td>{job.state}</td>
     <td>{job.duration}</td>
     <td>{job.created_at}</td>
     <td>{job.ended_at}</td>
     <td className="text-right">
-      <a href="#" className="btn btn-simple btn-info btn-icon like"><i className="fa fa-play"></i></a>
-      <a href="#" className="btn btn-simple btn-warning btn-icon edit"><i className="fa fa-stop"></i></a>
-      <a href="#" className="btn btn-simple btn-danger btn-icon remove"><i className="fa fa-clock-o"></i></a>
+      <a href="#" className="btn btn-simple btn-info btn-icon"><i className="material-icons">play_circle_filled</i></a>
+      <a href="#" className="btn btn-simple btn-warning btn-icon"><i className="material-icons">pause_circle_filled</i></a>
+      <a href="#" className="btn btn-simple btn-danger btn-icon"><i className="material-icons">remove_circle</i></a>
     </td>
   </tr>
 );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 class NavBar extends Component {
   componentDidMount() {
@@ -8,10 +9,10 @@ class NavBar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default top-fixed-navbar" style={{'backgroundColor': ''}}>
+      <nav className="navbar navbar-default" style={{'backgroundColor': ''}}>
           <div className="container-fluid">
             <div className="navbar-minimize">
-              <button id="minimizeSidebar" className="btn btn-neutral btn-fill btn-round btn-icon">
+              <button id="minimizeSidebar" className="btn btn-round btn-rose btn-fill btn-just-icon">
                 <i className="fa fa-ellipsis-v visible-on-sidebar-regular"></i>
                 <i className="fa fa-navicon visible-on-sidebar-mini"></i>
               </button>
@@ -29,13 +30,13 @@ class NavBar extends Component {
 
               <ul className="nav navbar-nav navbar-right">
                 <li>
-                  <a href="/dashboard" style={{'color': '#2196F3'}}>
+                  <Link to="/dashboard">
                     <i className="fa fa-line-chart"></i>
-                    <p>Stats</p>
-                  </a>
+                    <p className="hidden-lg hidden-md">Stats</p>
+                  </Link>
                 </li>
 
-                <li className="dropdown dropdown-with-icons">
+                <li className="dropdown">
                   <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                     <i className="fa fa-list"></i>
                     <p className="hidden-md hidden-lg">
@@ -61,12 +62,7 @@ class NavBar extends Component {
                     </li>
                     <li className="divider"></li>
                     <li>
-                      <a href="#">
-                        <i className="pe-7s-lock"></i> Lock Screen
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="text-danger">
+                      <a href="#" className="btn btn-rose">
                         <i className="pe-7s-close-circle"></i>
                         Log out
                       </a>

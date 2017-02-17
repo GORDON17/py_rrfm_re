@@ -11,7 +11,7 @@ const Price = ({ data }) => (
       <CartesianGrid stroke='#f5f5f5' vertical={false} y={10}/>
       <Bar dataKey="ticket_price" name="Ticket Price" stackId="a" fill="#009688" />
       <Bar dataKey="rsvp_count" name="RSVP Count" stackId="a" fill="#FF9800" />
-      <Line type='monotone' name="Rate of Attendance" dataKey="rate_of_attendence" stroke="#795548" />
+      <Line type='monotone' name="Rate of Attendance" dataKey="rate_of_attendence" stroke="#C51162" />
       <Legend />
     </ComposedChart>
   </ResponsiveContainer>

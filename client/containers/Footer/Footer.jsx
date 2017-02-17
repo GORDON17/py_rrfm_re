@@ -8,7 +8,7 @@ class Footer extends Component {
 
   render() {
     return (
-      <footer className="footer">
+      <footer className="footer-sm-white">
         <div className="container-fluid">
           <p className="copyright pull-right">
               © 2017 <a href="https://www.ivy.com/" style={{'color': '#FFDF00'}}>IVY</a>

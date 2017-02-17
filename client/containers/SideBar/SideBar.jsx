@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import sidebarBGI from '../../../assets/img/full-screen-image-3.jpg';
+import sidebarBGI from '../../../assets/img/sidebar.jpg';
 import ivyLogo from '../../../assets/img/ivy-logo.png';
 
 class SideBar extends Component {
@@ -17,7 +17,7 @@ class SideBar extends Component {
 
   render() {
     return (
-      <div className="sidebar" data-color="black">
+      <div className="sidebar fixed-position" data-active-color="rose" data-background-color="black">
         {/*<div className="logo">
           <img className="logo-image" src={ivyLogo} alt="Logo"/>
           <a href="http://www.ivy.com" className="logo-text" style={{'textAlign': 'left'}}>
@@ -36,7 +36,7 @@ class SideBar extends Component {
                 </div>
                 <div className="info">
                     <a data-toggle="collapse" href={"http://www.ivy.com"} className="collapsed" target="_blank">
-                        <span style={{'fontSize': '2.5em', 'fontFamily': 'Arizonia', 'color': '#FFDF00'}}>IVY</span>
+                        {/*<span style={{'fontSize': '2.5em', 'fontFamily': 'Arizonia', 'color': '#FFDF00'}}>IVY</span>*/}
                     </a>
                 </div>
             </div>

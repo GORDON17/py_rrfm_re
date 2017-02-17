@@ -63,7 +63,12 @@ var seq2 = 0, delays2 = 80, durations2 = 500;
 var $sidebar,
     window_width,
     image_src,
-    isWindows;
+    isWindows,
+    $navbar,
+    nav_content,
+    mobile_menu_content,
+    content_buff,
+    $toggle;
 
 $(document).ready(function(){
 
@@ -238,6 +243,7 @@ var md = {
                 }
 
                 setTimeout(function(){
+
                     $('body').addClass('sidebar-mini');
 
                     $('.sidebar .collapse').css('height','auto');
@@ -273,7 +279,7 @@ var md = {
 
 
     initRightMenu: debounce(function(){
-        $sidebar_wrapper = $('.sidebar-wrapper');
+        var $sidebar_wrapper = $('.sidebar-wrapper');
 
         if(!mobile_menu_initialized){
             $navbar = $('nav').find('.navbar-collapse').first().clone(true);
@@ -289,12 +295,12 @@ var md = {
 
             nav_content = '<ul class="nav nav-mobile-menu">' + nav_content + '</ul>';
 
-            $navbar_form = $('nav').find('.navbar-form').clone(true);
+            var $navbar_form = $('nav').find('.navbar-form').clone(true);
 
-            $sidebar_nav = $sidebar_wrapper.find(' > .nav');
+            var $sidebar_nav = $sidebar_wrapper.find(' > .nav');
 
             // insert the navbar form before the sidebar list
-            $nav_content = $(nav_content);
+            var $nav_content = $(nav_content);
             $nav_content.insertBefore($sidebar_nav);
             $navbar_form.insertBefore($nav_content);
 
@@ -337,8 +343,8 @@ var md = {
                     }, 430);
 
 
-                    main_panel_height = $('.main-panel')[0].scrollHeight;
-                    $layer = $('<div class="close-layer"></div>');
+                    var main_panel_height = $('.main-panel')[0].scrollHeight;
+                    var $layer = $('<div class="close-layer"></div>');
                     $layer.css('height',main_panel_height + 'px');
                     $layer.appendTo(".main-panel");
 

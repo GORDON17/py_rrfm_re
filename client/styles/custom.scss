@@ -1,9 +1,45 @@
-.table-outter { 
+.scroll-outter { 
 	overflow-x: scroll; 
 }
-table.dataTable {
-	min-width: 820px;
+.scroll-inner {
+	min-width: 900px;
 }
 
+.card-header {
+	margin-bottom: 30px !important;
+}
 
+.card-header > i { 
+	vertical-align: middle !important; 
+}
+
+.card-header > i.card-title {
+	font-weight: bold !important;
+	padding-left: 15px !important;
+}
+
+.fixed-position {
+	position: fixed;
+}
+
+#last-month a {
+	pointer-events: none !important;
+}
+
+#last-month a h1 {	
+	color: white !important;
+}
+
+#last-month a h4 {
+	color: #E0F2F1;
+}
+
+.footer-sm-white {
+	background-color: white !important;
+	padding: 0px !important;
+}
+
+.main-panel > .content {
+	margin-top: 0px !important;
+}
 

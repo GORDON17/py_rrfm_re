@@ -4,7 +4,7 @@ import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Respo
 const Count = ({ data }) => (
   <ResponsiveContainer height={450}>
     <ComposedChart data={data}
-                    margin={{top: 20, right: 50, bottom: 25, left: 20}}>
+                    margin={{top: 20, right: 50, bottom: 25, left: 10}}>
       <XAxis dataKey="date" label="Date"/>
       <YAxis />
       <Tooltip/>

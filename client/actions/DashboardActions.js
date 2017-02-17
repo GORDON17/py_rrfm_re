@@ -1,4 +1,5 @@
 import actions from './ActionConsts';
+import {API_URI} from '../utils/constants.js';
 
 export function initDashboard() {
 	console.log('init dashboard data ... ')
@@ -18,7 +19,7 @@ export function receiveCount(monthCount) {
 
 function getCountData() {
 	return dispatch => 
-		fetch('http://0.0.0.0:3000/api/v4/re/month-count')
+		fetch(API_URI + 'api/v4/re/month-count')
 			.then(response => response.json())
 			.then(json => dispatch(receiveCount(json)))
 }
@@ -32,7 +33,7 @@ export function receiveTicketPrice(ticketPrices) {
 
 function getTicketPriceData() {
 	return dispatch => 
-		fetch('http://local.ivy.com:3000/api/v4/re/ticket-prices')
+		fetch(API_URI + 'api/v4/re/ticket-prices')
 			.then(response => response.json())
 			.then(json => dispatch(receiveTicketPrice(json)))
 }
@@ -46,7 +47,7 @@ export function receiveCategoryPrice(categoryPrices) {
 
 function getCategoryPriceData() {
 	return dispatch => 
-		fetch('http://local.ivy.com:3000/api/v4/re/category-prices')
+		fetch(API_URI + 'api/v4/re/category-prices')
 			.then(response => response.json())
 			.then(json => dispatch(receiveCategoryPrice(json)))
 }

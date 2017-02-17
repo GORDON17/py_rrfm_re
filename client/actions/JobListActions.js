@@ -1,4 +1,5 @@
 import actions from './ActionConsts';
+import {API_URI} from '../utils/constants.js';
 
 export function initJobs() {
 	console.log('init jobs')

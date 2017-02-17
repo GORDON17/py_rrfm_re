@@ -17,7 +17,7 @@ class App extends Component {
         <SideBar></SideBar>
         <div className="main-panel">
           <NavBar></NavBar>
-          <div id="main-content" className="content">
+          <div className="content">
             {this.props.children}
           </div>
           <Footer></Footer>

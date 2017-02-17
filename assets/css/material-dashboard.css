@@ -5266,7 +5266,6 @@ html * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 h1, .h1 {
   font-size: 3.8em;
   line-height: 1.15em;
@@ -5284,21 +5283,31 @@ h3, .h3 {
 
 h4, .h4 {
   font-size: 1.3em;
-  line-height: 1.4em;
+  line-height: 1.55em;
 }
 
 h5, .h5 {
   font-size: 1.25em;
-  line-height: 1.4em;
+  line-height: 1.55em;
   margin-bottom: 15px;
 }
 
 h6, .h6 {
-  font-size: 1em;
+  font-size: 0.9em;
   text-transform: uppercase;
   font-weight: 500;
 }
 
+.title,
+.card-title,
+.info-title,
+.footer-brand,
+.footer-big h5,
+.footer-big h4,
+.media .media-heading {
+  font-weight: 700;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+}
 .title,
 .title a,
 .card-title,
@@ -10487,6 +10496,15 @@ footer .btn {
 .card [data-icon-bg-color="rose"] i {
   color: #e91e63;
 }
+
+.card [data-background-color="ink"] {
+  background: linear-gradient(60deg, #0288D1, #01579B, #0288D1);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(1, 87, 155, 0.4);
+}
+.card [data-icon-bg-color="ink"] i {
+  color: #0277BD;
+}
+
 .card [data-header-animation="true"] {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
