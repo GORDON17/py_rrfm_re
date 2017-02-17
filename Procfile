@@ -1,5 +1,5 @@
 fix: npm run fix
-web: npm run dist && gunicorn $GUNICORN_PARAMS --chdir server entry:app --timeout 99999999
-server: npm run fix && npm run gunicorn
+dist: npm run dist
+web: gunicorn $GUNICORN_PARAMS --chdir server entry:app --timeout 99999999
 webpackdev: npm start
 update: pip install -r requirements.txt --upgrade
