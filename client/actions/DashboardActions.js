@@ -1,5 +1,5 @@
 import actions from './ActionConsts';
-import constants from '../utils/constants.js';
+import {constants} from '../utils/constants.js';
 
 export function initDashboard() {
 	console.log('init dashboard data ... ')
