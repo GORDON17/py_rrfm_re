@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var update = require('react/lib/update');
 var webpack = require('webpack');
 var config = require('./webpack.base.config.js');
@@ -21,6 +22,8 @@ config = update(config, {
   },
 
   debug: { $set: false },
+
+  cache: { $set: true},
 
   profile: { $set: false },
 
@@ -62,7 +65,13 @@ config = update(config, {
   module: {
     loaders: {
       $push: [
-        { test: /\.(js|jsx)?$/, loaders: ['babel'], exclude: /node_modules/ }
+        { test: /\.(js|jsx)?$/, 
+          loaders: ['babel'], 
+          include: [ 
+            path.resolve('./client'), 
+            path.resolve('./assets/js')
+          ]
+        }
       ]
     }
   }

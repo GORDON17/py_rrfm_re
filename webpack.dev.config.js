@@ -51,7 +51,13 @@ config = update(config, {
   module: {
     loaders: {
       $push: [
-        { test: /\.(js|jsx)?$/, loaders: [ 'babel' ], exclude: /node_modules/ }
+        { test: /\.(js|jsx)?$/, 
+          loaders: [ 'babel' ], 
+          include: [ 
+            path.resolve('./client'), 
+            path.resolve('./assets/js')
+          ]
+        }
       ]
     }
   },
