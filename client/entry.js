@@ -23,6 +23,8 @@ jss.use(jssPx());
 jss.use(jssNested());
 jss.use(jssCamelCase());
 
+console.log(process.env);
+
 const store = configureStore();
 
 ReactDOM.render(
