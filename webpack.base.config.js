@@ -26,8 +26,7 @@ module.exports = {
       { test: /\.scss?/, loader: 'style!css!sass' },
       { test: /\.(png|jpg|jpeg)$/, loader: 'file' },
       { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file' }
-    ],
-    noParse: /\.min\.js/
+    ]
   }
 
 };
