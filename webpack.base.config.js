@@ -27,7 +27,7 @@ module.exports = {
       { test: /\.(png|jpg|jpeg)$/, loader: 'file' },
       { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file' }
     ],
-    noParse: /node_modules\/dist\/dev\/static\/server/
+    noParse: /\.min\.js/
   }
 
 };
