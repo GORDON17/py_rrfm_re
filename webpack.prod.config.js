@@ -16,14 +16,12 @@ config = update(config, {
   entry: { 
     $set: [
       './assets/css/index.scss',
-      './assets/js/index.js',
-      './client/entry'
+      './client/entry',
+      './assets/js/index.js'
     ] 
   },
 
   debug: { $set: false },
-
-  cache: { $set: true},
 
   profile: { $set: false },
 
