@@ -15,15 +15,12 @@ config = update(config, {
 
   entry: { 
     $set: [
-      './assets/css/index.scss',
       './assets/js/index.js',
       './client/entry'
     ] 
   },
 
   debug: { $set: false },
-
-  cache: { $set: true},
 
   profile: { $set: false },
 
@@ -45,7 +42,7 @@ config = update(config, {
         'process.env': {
           'NODE_ENV': JSON.stringify('production'),
           'SERVER_ENV': JSON.stringify('production'),
-          'API_URI': process.env.API_URI
+          'API_URI': JSON.stringify(process.env.API_URI)
         }
       }),
       new webpack.optimize.DedupePlugin(),

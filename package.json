@@ -60,7 +60,7 @@
     "eslint-plugin-babel": "3.0.0",
     "eslint-plugin-react": "6.2.0",
     "export-files-webpack-plugin": "0.0.1",
-    "html-webpack-plugin": "2.7.1",
+    "html-webpack-plugin": "2.27.1",
     "jest": "0.1.40",
     "jest-cli": "0.8.2",
     "jsx-loader": "0.13.2",

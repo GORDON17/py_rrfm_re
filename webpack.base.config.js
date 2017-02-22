@@ -10,7 +10,7 @@ module.exports = {
     modulesDirectories: [
       'node_modules'
     ],
-    extensions: ['', '.js', '.jsx', '.scss']
+    extensions: ['', '.js', '.jsx', '.scss', '.css']
   },
 
   plugins: [
@@ -23,7 +23,7 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.scss?/, loader: 'style!css!sass' },
+      { test: /\.(scss|css)?/, loader: 'style!css!sass' },
       { test: /\.(png|jpg|jpeg)$/, loader: 'file' },
       { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loader: 'file' }
     ]

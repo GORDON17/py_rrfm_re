@@ -13,9 +13,8 @@ if (process.env.NODE_ENV !== 'test') {
       $set: [
         'webpack-dev-server/client?http://localhost:8080',
         'webpack/hot/dev-server',
-        './assets/css/index.scss',
-        './client/entry',
-        './assets/js/index.js'
+        './assets/js/index.js',
+        './client/entry'
       ]
     }
   });
