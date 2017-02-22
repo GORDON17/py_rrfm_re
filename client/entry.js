@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import { Router, Route } from 'react-router';
 
 // import '../assets/css/index.scss';
+import 'react-select/scss/default.scss';
 import './styles/custom.scss';
 // import '../assets/js/index.js';
 
