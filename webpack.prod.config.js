@@ -15,8 +15,9 @@ config = update(config, {
 
   entry: { 
     $set: [
-      './assets/js/index.js',
-      './client/entry'
+      './assets/css/index.scss',
+      './client/entry',
+      './assets/js/index.js'
     ] 
   },
 
