@@ -103,11 +103,11 @@ class Scheduler:
 # 		p = Process(target=mp_process_interest_similarity, args=())
 # 		p.start()
 
-def interest_similarity_job():
-		p = Process(target=mp_process_interest_similarity, args=())
+def interest_similarity_job(params):
+		p = Process(target=mp_process_interest_similarity, args=(params,))
 		p.start()
 
-def mp_process_interest_similarity():
+def mp_process_interest_similarity(params):
 		connect_db()
 		job_id = '0'
 		job_name = 'social_interest_similarity'
@@ -116,7 +116,7 @@ def mp_process_interest_similarity():
 		job_obj_id = add_job(job_id=job_id, name=job_name)
 		
 		print('social_interest_similarity job is running.')
-		process_interest_similarity(SOCIAL_INTERESTS_URI, INTEREST_TYPES['social'])
+		process_interest_similarity(SOCIAL_INTERESTS_URI, INTEREST_TYPES['social'], params)
 
 		if job_obj_id:
 			update_job_state(job_obj_id=job_obj_id, state=1)
@@ -129,11 +129,11 @@ def mp_process_interest_similarity():
 # 		p = Process(target=mp_process_mutual_friends, args=())
 # 		p.start()
 
-def mutual_friends_job():
-		p = Process(target=mp_process_mutual_friends, args=())
+def mutual_friends_job(params):
+		p = Process(target=mp_process_mutual_friends, args=(params,))
 		p.start()
 
-def mp_process_mutual_friends():
+def mp_process_mutual_friends(params):
 		connect_db()
 		job_id = '1'
 		job_name = 'mutual_friend'
@@ -142,7 +142,7 @@ def mp_process_mutual_friends():
 		job_obj_id = add_job(job_id=job_id, name=job_name)
 		
 		print('mutual_friend job is running.')
-		process_mutual_friends(CONNECTIONS_URI)
+		process_mutual_friends(CONNECTIONS_URI, params)
 
 		if job_obj_id:
 			update_job_state(job_obj_id=job_obj_id, state=1)

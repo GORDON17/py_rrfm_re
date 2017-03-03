@@ -11,9 +11,7 @@ mutual_friend_api = Api(Blueprint('mutual_friend_api', __name__))
 class BFSAPI(Resource):
     @staticmethod
     def get(id):
-			g = graph(CONNECTIONS_URI)
-			results = bfs(g, id)
-			return json.dumps(results)
+			return json.dumps(api_process_mutuals_for(id, CONNECTIONS_URI))
 
 @mutual_friend_api.resource("/mutualtesting")
 class BFSAPITest(Resource):

@@ -9,7 +9,7 @@ export function initJobs() {
 
 function getJobs() {
 	return dispatch => 
-		fetch("api/jobs")
+		fetch("api/job/list")
 			.then(response =>	response.json() )
 			.then(json => dispatch(receiveJobs(json)) )
 }

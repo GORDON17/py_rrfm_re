@@ -18,14 +18,19 @@ class Jobs extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-12">
-            <div className="card">
+            <div id="job-table" className="card">
               <div className="card-header card-header-icon" data-background-color="purple">
                   <i className="material-icons">assignment</i>
               </div>
 
 
               <div className="card-content">
+                <div className="card-action-title">
                 <h4 className="card-title">Jobs Manager</h4>
+                <button className="btn btn-success btn-sm" data-toggle="modal" data-target="#jobCreateModel">
+                  <i className="fa fa-plus-square-o"></i>
+                </button>
+                </div>
                 <div className="material-datatables">
                   <div id="datatables_wrapper" className="dataTables_wrapper form-inline dt-bootstrap">
                     <div className="row">
@@ -51,6 +56,27 @@ class Jobs extends Component {
                   </div>
                   </div>
                   </div>*/}
+                  </div>
+                </div>
+              </div>
+
+              <div className="modal fade" id="jobCreateModel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{'display': 'none'}}>
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <button type="button" className="close" data-dismiss="modal" aria-hidden="true">
+                        <i className="material-icons">clear</i>
+                      </button>
+                      <h4 className="modal-title">Modal title</h4>
+                    </div>
+                    <div className="modal-body">
+                      <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+                      </p>
+                    </div>
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-simple">Nice Button<div className="ripple-container"></div></button>
+                      <button type="button" className="btn btn-danger btn-simple" data-dismiss="modal">Close<div className="ripple-container"><div className="ripple ripple-on ripple-out" style={{'left': '29.0781px', 'top': '20px', 'backgroundColor': 'rgb(244, 67, 54)', 'transform': 'scale(8.5)'}}></div><div className="ripple ripple-on ripple-out" style={{'left': '33.0781px', 'top': '29px', 'backgroundColor': 'rgb(244, 67, 54)', 'transform': 'scale(8.5)'}}></div></div></button>
+                    </div>
                   </div>
                 </div>
               </div>

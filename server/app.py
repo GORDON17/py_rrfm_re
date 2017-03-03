@@ -22,7 +22,7 @@ def create_app():
 
     app.register_blueprint(similarity_api.blueprint, url_prefix='/api')
     app.register_blueprint(mutual_friend_api.blueprint, url_prefix='/api')
-    app.register_blueprint(job_api.blueprint, url_prefix='/api')
+    app.register_blueprint(job_api.blueprint, url_prefix='/api/job')
     app.register_blueprint(dashboard_api.blueprint, url_prefix='/api/dashboard')
     app.register_blueprint(index_view)
 

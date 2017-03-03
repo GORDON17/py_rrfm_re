@@ -1,5 +1,6 @@
+import sys
 from apscheduler.schedulers import SchedulerNotRunningError
-from flask import Blueprint, json, jsonify
+from flask import Blueprint, json, jsonify, request
 from flask_restful import Api, Resource, reqparse
 
 from services.job_service import *
@@ -16,26 +17,35 @@ job_api = Api(Blueprint('job_api', __name__))
 @job_api.resource("/runsched")
 class JobStartAPI(Resource):
     @staticmethod
-    def get():
+    def post():
 			parser = reqparse.RequestParser()
-			parser.add_argument('day', type=int, help='Yada Yada Yada')
-			parser.add_argument('hour', type=int, help='Yada Yada Yada')
-			parser.add_argument('minute', type=int, help='Yada Yada Yada')
+			parser.add_argument('day', type=int, help='Day cannot be blank!')
+			parser.add_argument('hour', type=int, help='Hour cannot be blank!')
+			parser.add_argument('minute', type=int, help='Minute cannot be blank!')
 			args = parser.parse_args()
+			json_data = request.get_json(force=True)
 			day = args['day']
 			hour = args['hour']
 			minute = args['minute']
 			print(day, hour, minute)
+
 			try:
 				# global sched
 				global scheduler
-				scheduler.add_job(interest_similarity_job, 'cron', 
+
+				params = {
+					'location': json_data['location'],
+					'chapter': json_data['chapter'],
+					'nationality': json_data['nationality']
+				}
+
+				scheduler.add_job(interest_similarity_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='0',
 												name='social_interest_similarity')
-				scheduler.add_job(mutual_friends_job, 'cron', 
+				scheduler.add_job(mutual_friends_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
@@ -46,6 +56,7 @@ class JobStartAPI(Resource):
 				# sched.start()
 				return {'status': 200, 'message': 'The scheduler is running.'}
 			except:
+				print sys.exc_info()[0]
 				return {'status': 400, 'message': 'The scheduler is failed to start.'}
 
 
@@ -59,7 +70,7 @@ class JobStopAPI(Resource):
 			except SchedulerNotRunningError, e:
 				return {'status': 400, 'message': str(e)}
 
-@job_api.resource("/jobs")
+@job_api.resource("/list")
 class JobListAPI(Resource):
     @staticmethod
     def get():

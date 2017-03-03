@@ -43,3 +43,13 @@
 	margin-top: 0px !important;
 }
 
+#job-table .card-action-title {
+	h4 {
+		display: inline-block;
+	}
+
+	button {
+	  float: right;
+	  margin-top: 0;
+  }
+}

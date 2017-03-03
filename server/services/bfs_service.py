@@ -120,25 +120,41 @@ def _graph(uri):
     for connection in connections:
         account_id = int(connection['account_id'])
         requestor_id = int(connection['requestor_id'])
+        account_chapter = int(connection['account_chapter'])
+        requestor_chapter = int(connection['requestor_chapter'])
+        account_nationality = connection['account_nationality']
+        requestor_nationality = connection['requestor_nationality']
 
         if account_id in hash.keys():
             hash[account_id]['connections'].append(requestor_id)
         else:
             connections1 = []
             connections1.append(requestor_id)
-            hash[account_id] = {'connections': connections1}
+            # hash[account_id] = {'connections': connections1}
+            # hash[account_id] = {'chapter': account_chapter}
+            hash[account_id] = {
+                'connections': connections1,
+                'chapter': account_chapter,
+                'nationality': account_nationality
+            }
 
         if requestor_id in hash.keys():
             hash[requestor_id]['connections'].append(account_id)
         else:
             connections2 = []
             connections2.append(account_id)
-            hash[requestor_id] = {'connections': connections2}
+            # hash[requestor_id] = {'connections': connections2}
+            # hash[requestor_id] = {'chapter': requestor_chapter}
+            hash[requestor_id] = {
+                'connections': connections2,
+                'chapter': requestor_chapter,
+                'nationality': requestor_nationality
+            }
 
     return hash
 
 
-def _bfs(graph, user_id):
+def _bfs(graph, user_id, user_data, params):
     commons = {}
     visited, queue = set(), []
     visited.add(user_id)
@@ -148,14 +164,26 @@ def _bfs(graph, user_id):
     while queue:
         current = queue.pop(0)
 
-        if current['id'] not in visited:  # add location check here
+        if current['level'] > 6:
+            break 
+
+        if params['chapter']:
+            if graph[current['id']]['chapter'] != user_data['chapter']:
+                continue 
+
+        if params['nationality']:
+            if graph[current['id']]['nationality'] == user_data['nationality']:
+                continue 
+
+        if current['id'] not in visited:
             visited.add(current['id'])
+
             connections = _neighbours(graph, current['id'])
             if connections is not None:
                 queue = _enqueue(queue, visited, connections,
                                  current['level'] + 1)
 
-                if current['id'] not in friends and current['level'] < 6:
+                if current['id'] not in friends:
                     mutuals = _common_friends(graph, user_id, current['id'])
                     commons[current['id']] = {
                         # 'email': graph[current['id']]['email'],
@@ -168,12 +196,22 @@ def _bfs(graph, user_id):
 
 from mongodb import update_mutual_friend_recommendations
 
-def process_mutual_friends(uri):
+def process_mutual_friends(uri, params):
     networks = _graph(uri)
 
     for key, value in networks.iteritems():
         print("processing mutual friends for account: ", key)
-        best_recommendations = _bfs(networks, key)
+
+        best_recommendations = _bfs(networks, key, value, params)
         update_mutual_friend_recommendations(best_recommendations)
         print("finished mutual friends for account: ", key)
 
+
+
+
+# for mutual friend api
+def api_process_mutuals_for(id, uri):
+    g = _graph(uri)
+    # results = _bfs(g, id)
+
+    return g
