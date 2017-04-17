@@ -23,7 +23,7 @@ JobItem.propTypes = {
     state: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,
     created_at: PropTypes.string.isRequired,
-    ended_at: PropTypes.string.isRequired
+    ended_at: PropTypes.string
   }),
   index: PropTypes.number.isRequired
 };

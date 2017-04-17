@@ -1,4 +1,4 @@
-import os
+import os, pdb
 from mongoengine.connection import (connect, disconnect)
 
 def connect_db():

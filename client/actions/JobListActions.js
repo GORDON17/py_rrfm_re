@@ -11,7 +11,13 @@ function getJobs() {
 	return dispatch => 
 		fetch("api/job/list")
 			.then(response =>	response.json() )
-			.then(json => dispatch(receiveJobs(json)) )
+			.then(json => {
+				if (json.status === 200) {
+					dispatch(receiveJobs(json.data));
+				} else {
+					console.log('ERROR:', json.message);
+				}
+			})
 }
 
 export function receiveJobs(jobs) {

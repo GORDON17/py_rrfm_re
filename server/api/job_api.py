@@ -75,7 +75,7 @@ class JobListAPI(Resource):
     @staticmethod
     def get():
 			try:
-				return get_jobs()
+				return {'status': 200, 'message': 'OK', 'data': get_jobs()}
 			except:
 				return {'status': 400, 'message': 'Could not retrieve job list.'}
 

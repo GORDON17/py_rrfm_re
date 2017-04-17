@@ -6,7 +6,7 @@ class Job(DynamicDocument):
 	state = IntField(default=0)
 	duration = IntField(default=0)
 	created_at = DateTimeField(required=True)
-	ended_at = DateTimeField()
+	ended_at = DateTimeField(null=True)
 
 	def to_json(self):
 		return {
@@ -15,5 +15,5 @@ class Job(DynamicDocument):
 			'state': self.state,
 			'duration': self.duration,
 			'created_at': self.created_at.strftime("%Y-%m-%d %H:%M:%S"),#.isoformat()
-			'ended_at': self.ended_at.strftime("%Y-%m-%d %H:%M:%S")
+			'ended_at': self.ended_at.strftime("%Y-%m-%d %H:%M:%S") if self.ended_at else None
 		}
