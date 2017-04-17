@@ -4,15 +4,12 @@ import { Link } from 'react-router';
 
 import sidebarBGI from '../../../assets/img/sidebar.jpg';
 import ivyLogo from '../../../assets/img/ivy-logo.png';
+import './SideBar.scss';
 
 class SideBar extends Component {
   componentDidMount() {
     /* init data here */
 
-    $(".nav a").on("click", function(){
-      $(".nav").find(".active").removeClass("active");
-      $(this).parent().addClass("active");
-    });
   }
 
   render() {
@@ -41,15 +38,15 @@ class SideBar extends Component {
                 </div>
             </div>
           <ul className="nav">
-            <li className="active">
-              <Link to="/dashboard">
+            <li>
+              <Link to="/dashboard" activeClassName="active">
                 <i className="pe-7s-graph"></i>
                 <p>Dashboard</p>
               </Link>
             </li>
 
             <li>
-              <Link to="/jobs">
+              <Link to="/jobs" activeClassName="active">
                 <i className="pe-7s-alarm"></i>
                 <p>Jobs</p>
               </Link>
