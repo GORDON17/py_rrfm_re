@@ -7,6 +7,7 @@ from configurations.env_configs import *
 def _request_data(uri):
 	print ("Sending request to:", uri)
 	request=Request(uri)
+	request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
 	data = json.loads(urlopen(request).read())
 	df = pd.DataFrame(data)
 	print ("Data shape:", df.shape)

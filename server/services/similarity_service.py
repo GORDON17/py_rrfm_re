@@ -5,6 +5,7 @@ from scipy.spatial import distance
 from scipy.stats import pearsonr
 from urllib2 import Request, urlopen
 from pandas.io.json import json_normalize
+from configurations.env_configs import *
 
 
 # def interests_sim(id):
@@ -186,6 +187,7 @@ def _datasets_path():
 def _request_data(uri):
 	print ("Sending request to:", uri)
 	request = Request(uri)
+	request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
 	data = json.loads(urlopen(request).read())
 
 	df = pd.DataFrame(data)
@@ -373,9 +375,6 @@ def _manipulate_profile_matrix(df):
 
     df_profile_s.reset_index(drop=True, inplace=True)
     return df_profile_s
-
-
-
 
 
 def _calculate_similarity(df):

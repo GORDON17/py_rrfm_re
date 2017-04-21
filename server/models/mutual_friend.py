@@ -5,3 +5,4 @@ class MutualFriend(DynamicDocument):
 	user_id = IntField(required=True)
 	connection_level = IntField(default=0)
 	num_of_mutual_friends = IntField(default=0)
+	created_at = DateTimeField(required=True)

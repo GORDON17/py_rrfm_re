@@ -16,3 +16,4 @@ scikit-learn==0.18.1
 matplotlib==1.5.3
 pandas==0.19.2
 APScheduler==3.3.1
+boto==2.46.1

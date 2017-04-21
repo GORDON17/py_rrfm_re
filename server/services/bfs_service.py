@@ -1,4 +1,4 @@
-
+from configurations.env_configs import *
 # def graph():
 #   hash = dict()
 #   with open(_datasets_path() + 'connections.csv', 'rb') as csvfile:
@@ -29,6 +29,7 @@
 def _request_data(uri):
     print("Sending request to:", uri)
     request = Request(uri)
+    request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
     data = json.loads(urlopen(request).read())
     return data
 
@@ -212,6 +213,6 @@ def process_mutual_friends(uri, params):
 # for mutual friend api
 def api_process_mutuals_for(id, uri):
     g = _graph(uri)
-    # results = _bfs(g, id)
+    results = _bfs(g, id)
 
-    return g
+    return results

@@ -27,6 +27,7 @@ def disconnect_db():
 from datetime import datetime
 # from pymongo import MongoClient
 from configurations.env_configs import *
+from configurations.constants import *
 from models.event_type_similarity import EventTypeSimilarity
 from models.interest_similarity import InterestSimilarity
 from models.job import Job
@@ -79,35 +80,41 @@ def update_events_table(id, df):
 	print ("Updated:", EventTypeSimilarity.objects.count())
 
 def update_interests_table(id, df, type):
+	time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 	for index, row in df.iterrows():
 		if id == row['account_id']:
 			continue
 
 		interest_count = row['interest_count']
 		interest_similarity = row['interest_similarity']
-		if type == INTEREST_TYPES['social']:
+		
+		if type == INTEREST_TYPES['SOCIAL']:
 			InterestSimilarity.objects(account_id=id,
 																 user_id=row['account_id']) \
 												.modify(upsert=True, 
 																new=True, 
 																set__social_interest_count=interest_count,
-																set__social_interest_similarity=interest_similarity) \
+																set__social_interest_similarity=interest_similarity,
+																set__created_at=time_now) \
 												.save()
-		elif type == INTEREST_TYPES['business']:
+		elif type == INTEREST_TYPES['BUSINESS']:
 			InterestSimilarity.objects(account_id=id,
 																 user_id=row['account_id']) \
 												.modify(upsert=True, 
 																new=True, 
 																set__business_interest_count=interest_count,
-																set__business_interest_similarity=interest_similarity) \
+																set__business_interest_similarity=interest_similarity,
+																set__created_at=time_now) \
 												.save()
-		elif type == INTEREST_TYPES['lifestyle']:
+		elif type == INTEREST_TYPES['LIFESTYLE']:
 			InterestSimilarity.objects(account_id=id,
 																 user_id=row['account_id']) \
 												.modify(upsert=True, 
 																new=True, 
 																set__lifestyle_interest_count=interest_count,
-																set__lifestyle_interest_similarity=interest_similarity) \
+																set__lifestyle_interest_similarity=interest_similarity,
+																set__created_at=time_now) \
 												.save()
 
 	# print ("Updated:", InterestSimilarity.objects.count())
@@ -166,19 +173,40 @@ def get_jobs():
 from models.mutual_friend import MutualFriend
 
 def update_mutual_friend_recommendations(commons):
+	time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 	for key, value in commons.iteritems():
 		MutualFriend.objects(account_id=value['parent'],
 												 user_id=key) \
 									.modify(upsert=True, 
 													new=True, 
 													set__connection_level=value['level'],
-													set__num_of_mutual_friends=value['num_of_commons']) \
+													set__num_of_mutual_friends=value['num_of_commons'],
+													set__created_at=time_now) \
 									.save()
 
 
+def build_interest_recommendation_vault_objects():
+	vaults = []
+
+	objects = InterestSimilarity.objects
+	for obj in objects:
+		if obj.social_interest_similarity and obj.social_interest_count:
+			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_social_interest_vault_context())
+			vaults.append(vault)
+
+	return vaults
 
 
-
+def _build_vault_object(obj, target, context):
+	return	{
+						'actor': {
+							'type': "Service",
+			        'name': "IVY Recommendation"
+			    	},
+			    	'object': obj,
+			    	'target': target,
+			    	'context': context
+					}
 
 
 

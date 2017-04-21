@@ -6,6 +6,7 @@ from flask_restful import Api, Resource, reqparse
 from services.job_service import *
 from services.mongodb import get_jobs
 from configurations.env_configs import *
+from configurations.constants import *
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -14,8 +15,8 @@ scheduler = BackgroundScheduler()
 
 job_api = Api(Blueprint('job_api', __name__))
 
-@job_api.resource("/runsched")
-class JobStartAPI(Resource):
+@job_api.resource("/runscheduler/generate")
+class JobGenerateAPI(Resource):
     @staticmethod
     def post():
 			parser = reqparse.RequestParser()
@@ -23,10 +24,11 @@ class JobStartAPI(Resource):
 			parser.add_argument('hour', type=int, help='Hour cannot be blank!')
 			parser.add_argument('minute', type=int, help='Minute cannot be blank!')
 			args = parser.parse_args()
-			json_data = request.get_json(force=True)
 			day = args['day']
 			hour = args['hour']
 			minute = args['minute']
+
+			json_data = request.get_json(force=True)
 			print(day, hour, minute)
 
 			try:
@@ -39,18 +41,18 @@ class JobStartAPI(Resource):
 					'nationality': json_data['nationality']
 				}
 
-				scheduler.add_job(interest_similarity_job, 'cron', args=[params],
+				scheduler.add_job(g_social_interest_similarity_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='0',
-												name='social_interest_similarity')
-				scheduler.add_job(mutual_friends_job, 'cron', args=[params],
+												name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
+				scheduler.add_job(g_mutual_friends_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='1',
-												name='mutual_friend')
+												name=JOB['GENERATE']['MUTUAL_FRIEND'])
 				scheduler.start()
 				# sched.schedule_jobs(day_of_week=2, hour=9, minute=33)
 				# sched.start()
@@ -60,7 +62,45 @@ class JobStartAPI(Resource):
 				return {'status': 400, 'message': 'The scheduler is failed to start.'}
 
 
-@job_api.resource("/stopsched")
+@job_api.resource("/runscheduler/retrieve")
+class JobRetrieveAPI(Resource):
+    @staticmethod
+    def get():
+			parser = reqparse.RequestParser()
+			parser.add_argument('day', type=int, help='Day cannot be blank!')
+			parser.add_argument('hour', type=int, help='Hour cannot be blank!')
+			parser.add_argument('minute', type=int, help='Minute cannot be blank!')
+			args = parser.parse_args()
+			day = args['day']
+			hour = args['hour']
+			minute = args['minute']
+
+			print(day, hour, minute)
+
+			try:
+				global scheduler
+
+				scheduler.add_job(r_interest_similarity_job, 'cron',
+												day_of_week=day, 
+												hour=hour, 
+												minute=minute,
+												id='0',
+												name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
+				scheduler.add_job(r_mutual_friends_job, 'cron',
+												day_of_week=day, 
+												hour=hour, 
+												minute=minute,
+												id='1',
+												name=JOB['RETRIEVE']['MUTUAL_FRIEND'])
+
+				scheduler.start()
+				return {'status': 200, 'message': 'The scheduler is running.'}
+			except:
+				print sys.exc_info()[0]
+				return {'status': 400, 'message': 'The scheduler is failed to start.'}
+
+
+@job_api.resource("/stopscheduler")
 class JobStopAPI(Resource):
     @staticmethod
     def get():
