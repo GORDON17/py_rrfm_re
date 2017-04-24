@@ -8,10 +8,12 @@ from services.mongodb import *
 from configurations.env_configs import *
 from configurations.constants import *
 from api import check_token
+import pdb
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-scheduler = BackgroundScheduler()
+scheduler_generate = BackgroundScheduler()
+scheduler_retrieve = BackgroundScheduler()
 # sched = Scheduler(s)
 
 job_api = Api(Blueprint('job_api', __name__))
@@ -37,7 +39,7 @@ class JobGenerateAPI(Resource):
 
 			try:
 				# global sched
-				global scheduler
+				global scheduler_generate
 
 				params = {
 					'location': json_data['location'],
@@ -45,19 +47,19 @@ class JobGenerateAPI(Resource):
 					'nationality': json_data['nationality']
 				}
 
-				scheduler.add_job(g_social_interest_similarity_job, 'cron', args=[params],
+				scheduler_generate.add_job(g_social_interest_similarity_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='0',
 												name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
-				scheduler.add_job(g_mutual_friends_job, 'cron', args=[params],
+				scheduler_generate.add_job(g_mutual_friends_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='1',
 												name=JOB['GENERATE']['MUTUAL_FRIEND'])
-				scheduler.start()
+				scheduler_generate.start()
 				# sched.schedule_jobs(day_of_week=2, hour=9, minute=33)
 				# sched.start()
 				return {'status': 200, 'message': 'The scheduler is running.'}
@@ -85,22 +87,22 @@ class JobRetrieveAPI(Resource):
 			print "Setup a retrieve scheduler at: ", (day, hour, minute)
 
 			try:
-				global scheduler
+				global scheduler_retrieve
 
-				scheduler.add_job(r_interest_similarity_job, 'cron',
+				scheduler_retrieve.add_job(r_interest_similarity_job, 'cron',
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='0',
 												name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
-				scheduler.add_job(r_mutual_friend_job, 'cron',
+				scheduler_retrieve.add_job(r_mutual_friend_job, 'cron',
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,
 												id='1',
 												name=JOB['RETRIEVE']['MUTUAL_FRIEND'])
 
-				scheduler.start()
+				scheduler_retrieve.start()
 				return {'status': 200, 'message': 'The scheduler is running.'}
 			except:
 				print sys.exc_info()[0]
@@ -116,8 +118,15 @@ class JobStopAPI(Resource):
 				return {'status': 403, 'message': 'Permission Denied'}
 
 			try:
-				scheduler.shutdown(wait=False)
-				return {'status': 200, 'message': 'The scheduler is shutdown.'}
+				if scheduler_generate.running:
+					scheduler_generate.shutdown(wait=False)
+					print "Shut down generate scheduler."
+
+				if scheduler_retrieve.running:
+					scheduler_retrieve.shutdown(wait=False)
+					print "Shut down retrieve scheduler."
+
+				return {'status': 200, 'message': 'The schedulers are shut down.'}
 			except SchedulerNotRunningError, e:
 				return {'status': 400, 'message': str(e)}
 
