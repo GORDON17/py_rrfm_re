@@ -7,6 +7,7 @@ from services.job_service import *
 from services.mongodb import *
 from configurations.env_configs import *
 from configurations.constants import *
+from api import check_token
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -27,6 +28,9 @@ class JobGenerateAPI(Resource):
 			day = args['day']
 			hour = args['hour']
 			minute = args['minute']
+
+			if not check_token(parser):
+				return {'status': 403, 'message': 'Permission Denied'}
 
 			json_data = request.get_json(force=True)
 			print "Setup a generate scheduler at: ", (day, hour, minute)
@@ -75,6 +79,9 @@ class JobRetrieveAPI(Resource):
 			hour = args['hour']
 			minute = args['minute']
 
+			if not check_token(parser):
+				return {'status': 403, 'message': 'Permission Denied'}
+
 			print "Setup a retrieve scheduler at: ", (day, hour, minute)
 
 			try:
@@ -104,6 +111,10 @@ class JobRetrieveAPI(Resource):
 class JobStopAPI(Resource):
     @staticmethod
     def get():
+			parser = reqparse.RequestParser()
+			if not check_token(parser):
+				return {'status': 403, 'message': 'Permission Denied'}
+
 			try:
 				scheduler.shutdown(wait=False)
 				return {'status': 200, 'message': 'The scheduler is shutdown.'}
@@ -114,11 +125,16 @@ class JobStopAPI(Resource):
 class JobListAPI(Resource):
     @staticmethod
     def get():
+			parser = reqparse.RequestParser()
+			if not check_token(parser):
+				return {'status': 403, 'message': 'Permission Denied'}
+
 			try:
 				data = get_jobs()
 				return {'status': 200, 'message': 'OK', 'data': data }
 			except:
 				return {'status': 400, 'message': 'Could not retrieve job list.'}
+
 
 
 
