@@ -186,6 +186,7 @@ def update_mutual_friend_recommendations(commons):
 
 
 def build_interest_recommendation_vault_objects():
+	connect_db()
 	vaults = []
 
 	objects = InterestSimilarity.objects
@@ -194,6 +195,21 @@ def build_interest_recommendation_vault_objects():
 			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_social_interest_vault_context())
 			vaults.append(vault)
 
+	disconnect_db()
+	return vaults
+
+
+def build_mutual_recommendation_vault_objects():
+	connect_db()
+	vaults = []
+
+	objects = MutualFriend.objects
+	for obj in objects:
+		if obj.num_of_mutual_friends:
+			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_mutual_vault_context())
+			vaults.append(vault)
+
+	disconnect_db()
 	return vaults
 
 

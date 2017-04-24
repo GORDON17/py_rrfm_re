@@ -1,5 +1,5 @@
 from mongoengine import *
-from vault_templates import *
+from vault_templates import social_interest_template
 
 class InterestSimilarity(DynamicDocument):
 	account_id = IntField(required=True)

@@ -4,7 +4,7 @@ from flask import Blueprint, json, jsonify, request
 from flask_restful import Api, Resource, reqparse
 
 from services.job_service import *
-from services.mongodb import get_jobs
+from services.mongodb import *
 from configurations.env_configs import *
 from configurations.constants import *
 
@@ -29,7 +29,7 @@ class JobGenerateAPI(Resource):
 			minute = args['minute']
 
 			json_data = request.get_json(force=True)
-			print(day, hour, minute)
+			print "Setup a generate scheduler at: ", (day, hour, minute)
 
 			try:
 				# global sched
@@ -75,7 +75,7 @@ class JobRetrieveAPI(Resource):
 			hour = args['hour']
 			minute = args['minute']
 
-			print(day, hour, minute)
+			print "Setup a retrieve scheduler at: ", (day, hour, minute)
 
 			try:
 				global scheduler
@@ -86,7 +86,7 @@ class JobRetrieveAPI(Resource):
 												minute=minute,
 												id='0',
 												name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
-				scheduler.add_job(r_mutual_friends_job, 'cron',
+				scheduler.add_job(r_mutual_friend_job, 'cron',
 												day_of_week=day, 
 												hour=hour, 
 												minute=minute,

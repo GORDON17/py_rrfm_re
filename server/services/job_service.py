@@ -152,15 +152,32 @@ def mp_generate_mutual_friends(params):
 			print('there is no such job')
 
 
+from services.sqs_service import *
+SIZE = 100
 
 
 def r_interest_similarity_job():
-	p = Process(target=mp_retrieve_social_interest_similarity)
+	p = Process(target=mp_retrieve_interest_similarity)
 	p.start()
 
-def mp_retrieve_social_interest_similarity():
-	connect_db()
-	vault_objects = build_interest_recommendation_vault_objects()
+def mp_retrieve_interest_similarity():
+	vaults = build_interest_recommendation_vault_objects()
+	sqs = SQSService()
+
+	for i in xrange(0, len(vaults), SIZE):
+		sqs.push_objects_into_vault(vaults[i:i + SIZE])
+
+
+def r_mutual_friend_job():
+	p = Process(target=mp_retrieve_mutual_friend)
+	p.start()
+
+def mp_retrieve_mutual_friend():
+	vaults = build_mutual_recommendation_vault_objects()
+	sqs = SQSService()
+
+	for i in xrange(0, len(vaults), SIZE):
+		sqs.push_objects_into_vault(vaults[i:i + SIZE])
 
 
 # @sched.scheduled_job('interval', minutes=0.1, id='0', name='social_interest_similarity')
