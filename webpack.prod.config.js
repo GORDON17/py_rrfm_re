@@ -43,7 +43,8 @@ config = update(config, {
         'process.env': {
           'NODE_ENV': JSON.stringify('production'),
           'SERVER_ENV': JSON.stringify('production'),
-          'API_URI': JSON.stringify(process.env.API_URI)
+          'API_URI': JSON.stringify(process.env.API_URI),
+          'RAILS_TOKEN': JSON.stringify(process.env.RAILS_TOKEN)
         }
       }),
       new webpack.optimize.DedupePlugin(),

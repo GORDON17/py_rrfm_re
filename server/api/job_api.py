@@ -65,7 +65,7 @@ class JobGenerateAPI(Resource):
 @job_api.resource("/runscheduler/retrieve")
 class JobRetrieveAPI(Resource):
     @staticmethod
-    def get():
+    def post():
 			parser = reqparse.RequestParser()
 			parser.add_argument('day', type=int, help='Day cannot be blank!')
 			parser.add_argument('hour', type=int, help='Hour cannot be blank!')
@@ -115,7 +115,8 @@ class JobListAPI(Resource):
     @staticmethod
     def get():
 			try:
-				return {'status': 200, 'message': 'OK', 'data': get_jobs()}
+				data = get_jobs()
+				return {'status': 200, 'message': 'OK', 'data': data }
 			except:
 				return {'status': 400, 'message': 'Could not retrieve job list.'}
 

@@ -39,6 +39,14 @@ config = update(config, {
   plugins: {
     $push: [
       new webpack.HotModuleReplacementPlugin(),
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': JSON.stringify('development'),
+          'SERVER_ENV': JSON.stringify('development'),
+          'API_URI': 'http://localhost:3000/',
+          'RAILS_TOKEN': 'c30a7641-0d2b-4fdc-9cd5-1c2d85905726'
+        }
+      }),
       new HtmlWebpackPlugin({
         inject: true,
         filename: 'dev/index.html',

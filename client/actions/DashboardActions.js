@@ -19,7 +19,12 @@ export function receiveCount(monthCount) {
 
 function getCountData() {
 	return dispatch => 
-		fetch(constants.API_URI + 'api/v4/re/month-count')
+		fetch(constants.API_URI + 'api/v4/re/month-count', {
+			method: 'get',
+			headers: {
+				'HTTP_X_IVY_SESSION_TOKEN': constants.RAILS_TOKEN
+			}
+		})
 			.then(response => response.json())
 			.then(json => dispatch(receiveCount(json)))
 }
@@ -33,7 +38,12 @@ export function receiveTicketPrice(ticketPrices) {
 
 function getTicketPriceData() {
 	return dispatch => 
-		fetch(constants.API_URI + 'api/v4/re/ticket-prices')
+		fetch(constants.API_URI + 'api/v4/re/ticket-prices', {
+			method: 'get',
+			headers: {
+				'HTTP_X_IVY_SESSION_TOKEN': constants.RAILS_TOKEN
+			}
+		})
 			.then(response => response.json())
 			.then(json => dispatch(receiveTicketPrice(json)))
 }
@@ -47,7 +57,12 @@ export function receiveCategoryPrice(categoryPrices) {
 
 function getCategoryPriceData() {
 	return dispatch => 
-		fetch(constants.API_URI + 'api/v4/re/category-prices')
+		fetch(constants.API_URI + 'api/v4/re/category-prices', {
+			method: 'get',
+			headers: {
+				'HTTP_X_IVY_SESSION_TOKEN': constants.RAILS_TOKEN
+			}
+		})
 			.then(response => response.json())
 			.then(json => dispatch(receiveCategoryPrice(json)))
 }
