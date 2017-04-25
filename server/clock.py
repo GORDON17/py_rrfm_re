@@ -6,7 +6,7 @@ from apscheduler.schedulers.background import BlockingScheduler
 
 scheduler = BlockingScheduler()
 
-@scheduler.scheduled_job('cron', day_of_week=1, hour=14, minute=50, id='01', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=14, minute=50, id='01', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
 def social_interest_similarity_job_with_lcn():
 	params = {
 		'location': True,

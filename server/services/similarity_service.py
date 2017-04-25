@@ -323,21 +323,33 @@ def process_interest_similarity(uri, type, params):
 		print ("Structured profile matrix shape:", df_profile_t.shape)
 
 		df_interest_sim = _calculate_similarity(df_profile_t)
+		profile_len = len(df_profile_t.columns)
+		del df_profile_t
+		gc.collect()
+
 		count = 1
-		prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']]
+		prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']].copy()
+		del structured_df
+		gc.collect()
+
 		for index, profile in prepared_df.iterrows():
 				sim_for_account = df_interest_sim[index].tolist()
 				sim_list = pd.Series(sim_for_account)
 				df = prepared_df.copy()
 				df['interest_similarity'] = 1 - sim_list.values
-				df['interest_count'] = (1 - sim_list.values) * len(df_profile_t.columns)
+				df['interest_count'] = (1 - sim_list.values) * profile_len
 				df['interest_count'] = df['interest_count'].astype(int)
 
 				df_profile_f = _filtered_profile_matrix(df, profile, params) #df[(df.location == '') | (df.location == 'empty') | (df.location.str.contains(profile.location))]
-				df_profile_r = df_profile_f.sort_values(by='interest_similarity', ascending=0)[1:20]
+				df_profile_r = df_profile_f.sort_values(by='interest_similarity', ascending=0)[1:10]
 				update_interests_table(profile.account_id, df_profile_r, type)
 				print('Processed interest similarity: ', count)
 				count += 1
+
+		del df_interest_sim
+		del prepared_df
+		gc.collect()
+
 
 def _filtered_profile_matrix(df, profile, params):
 	df_copy = df.copy()
