@@ -319,13 +319,13 @@ def process_interest_similarity(uri, type, params):
 		del df_profile
 		gc.collect()
 
-		df_profile_t = structured_df[structured_df.columns[4:]]
-		print ("Structured profile matrix shape:", df_profile_t.shape)
+		# df_profile_t = structured_df[structured_df.columns[4:]]
+		print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
 
-		df_interest_sim = _calculate_similarity(df_profile_t)
-		profile_len = len(df_profile_t.columns)
-		del df_profile_t
-		gc.collect()
+		df_interest_sim = _calculate_similarity(structured_df[structured_df.columns[4:]])
+		profile_len = len(structured_df[structured_df.columns[4:]].columns)
+		# del df_profile_t
+		# gc.collect()
 
 		count = 1
 		prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']].copy()
