@@ -4,7 +4,7 @@ from mongoengine.connection import (connect, disconnect)
 def connect_db():
   ENV = os.environ.get('SERVER_ENV')
   print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), datetime.now().strftime("%A"))
-  if ENV != "production":
+  if ENV == "development":
     from configurations.development import MONGO_URI, MONGO_DBNAME
     connect(
       db=MONGO_DBNAME,
