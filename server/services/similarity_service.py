@@ -364,42 +364,36 @@ def _filtered_profile_matrix(df, profile, params):
 
 	return df_copy
 
+
 def _manipulate_profile_matrix(df):
-    df_profile = df.copy()
-    df_profile[['account_id']] = df_profile[['account_id']].astype(int)
-    df_profile[['chapter']] = df_profile[['chapter']].astype(int)
-    df_profile['location'].fillna('empty', inplace=True)
-    df_profile['nationality'].fillna('empty', inplace=True)
-    df_profile['chapter'].fillna(0, inplace=True)
-    df_profile_t = pd.pivot_table(df_profile, index=['account_id', 'location', 'nationality', 'chapter'], columns=['social'], values='indicator')
-    del df_profile
-    gc.collect()
-
-    df_profile_t = df_profile_t.reset_index()
-    df_profile_t = df_profile_t.fillna(value=0)
-    df_profile_f = df_profile_t.dropna()
-    del df_profile_t
-    gc.collect()
-
-    df_profile_s = df_profile_f.sort_values(by='account_id', ascending=True)
-    del df_profile_f
-    gc.collect()
-
-    df_profile_s.reset_index(drop=True, inplace=True)
-    return df_profile_s
+		df_profile = df.copy()
+		df_profile[['account_id']] = df_profile[['account_id']].astype(int)
+		df_profile[['chapter']] = df_profile[['chapter']].astype(int)
+		df_profile['location'].fillna('empty', inplace=True)
+		df_profile['nationality'].fillna('empty', inplace=True)
+		df_profile['chapter'].fillna(0, inplace=True)
+		df_profile_t = pd.pivot_table(df_profile, index=['account_id', 'location', 'nationality', 'chapter'], columns=['social'], values='indicator')
+		del df_profile
+		gc.collect()
+		
+		df_profile_t.reset_index(inplace=True)
+		df_profile_t.fillna(value=0, inplace=True)
+		df_profile_t.dropna(inplace=True)
+		
+		df_profile_t.sort_values(by='account_id', ascending=True, inplace=True)
+		
+		df_profile_t.reset_index(drop=True, inplace=True)
+		return df_profile_t
 
 
 def _calculate_similarity(df):
-    profile_d = distance.pdist(df, metric='matching')
-    profile_D = distance.squareform(profile_d)
+		profile_d = distance.pdist(df, metric='matching')
+		profile_D = distance.squareform(profile_d)
 
-    del profile_d
-    gc.collect()
-    
-    return profile_D
-
-
-
+		del profile_d
+		gc.collect()
+		
+		return profile_D
 
 
 
