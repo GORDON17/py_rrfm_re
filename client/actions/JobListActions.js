@@ -1,3 +1,4 @@
+import 'whatwg-fetch'; 
 import actions from './ActionConsts';
 import constants from '../utils/constants';
 
@@ -15,8 +16,7 @@ function getJobs() {
 			headers: {
 				'Token': constants.RAILS_TOKEN
 			}
-		})
-			.then(response =>	response.json() )
+		}).then(response =>	response.json() )
 			.then(json => {
 				if (json.status === 200) {
 					dispatch(receiveJobs(json.data));

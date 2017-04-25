@@ -1,3 +1,4 @@
+import 'whatwg-fetch';
 import actions from './ActionConsts';
 import constants from '../utils/constants';
 
@@ -24,8 +25,7 @@ function getCountData() {
 			headers: {
 				'HTTP_X_IVY_SESSION_TOKEN': constants.RAILS_TOKEN
 			}
-		})
-			.then(response => response.json())
+		}).then(response => response.json())
 			.then(json => dispatch(receiveCount(json)))
 }
 
@@ -43,8 +43,7 @@ function getTicketPriceData() {
 			headers: {
 				'HTTP_X_IVY_SESSION_TOKEN': constants.RAILS_TOKEN
 			}
-		})
-			.then(response => response.json())
+		}).then(response => response.json())
 			.then(json => dispatch(receiveTicketPrice(json)))
 }
 
@@ -62,7 +61,6 @@ function getCategoryPriceData() {
 			headers: {
 				'HTTP_X_IVY_SESSION_TOKEN': constants.RAILS_TOKEN
 			}
-		})
-			.then(response => response.json())
+		}).then(response => response.json())
 			.then(json => dispatch(receiveCategoryPrice(json)))
 }
