@@ -189,7 +189,11 @@ def build_interest_recommendation_vault_objects():
 	connect_db()
 	vaults = []
 
-	objects = InterestSimilarity.objects
+	if os.environ.get('SERVER_ENV') == 'production':
+		objects = InterestSimilarity.objects
+	elif os.environ.get('SERVER_ENV') == 'staging':
+		objects = InterestSimilarity.objects(account_id__in=[790, 28071, 45622])
+
 	for obj in objects:
 		if obj.social_interest_similarity and obj.social_interest_count:
 			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_social_interest_vault_context())
