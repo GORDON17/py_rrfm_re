@@ -323,6 +323,7 @@ def process_interest_similarity(uri, type, params):
 
 				prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']].copy()
 				for i in xrange(0, row_count, BATCH_SIZE):
+						print 'Processing records: ', i, ' to ', i + BATCH_SIZE
 						list_interest_sim = _calculate_similarity(structured_df[structured_df.columns[4:]].copy(), i, BATCH_SIZE)
 
 						count = 0
