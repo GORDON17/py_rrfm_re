@@ -371,7 +371,6 @@ def _manipulate_profile_matrix(df):
 		df_profile_t.sort_values(by='account_id', ascending=True, inplace=True)
 		df_profile_t.reset_index(drop=True, inplace=True)
 
-		del df_profile_t
 		del df_profile
 		return df_profile_t
 
