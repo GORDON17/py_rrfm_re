@@ -20,7 +20,7 @@ def social_interest_similarity_job_with_lcn():
 		print "social_interest_similarity_job_with_lcn is failed!"
 
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=(int(os.environ.get('G_HOUR')) + 6), minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
 def mutual_friend_job_with_lcn():
 	params = {
 		'location': True,
