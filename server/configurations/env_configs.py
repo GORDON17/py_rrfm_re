@@ -16,3 +16,5 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SERET_ACCESS_KEY = os.environ.get('AWS_SERET_ACCESS_KEY')
 AWS_REGION_NAME = os.environ.get('AWS_REGION_NAME')
 SQS_QUEUE_URL = os.environ.get('SQS_QUEUE_URL')
+
+BATCH_SIZE = os.environ.get('BATCH_SIZE') or 1000
