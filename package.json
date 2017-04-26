@@ -40,7 +40,8 @@
     "immutable": "3.8.1",
     "recharts": "0.20.0",
     "react-select": "1.0.0-rc.3",
-    "html-webpack-plugin": "2.27.1"
+    "html-webpack-plugin": "2.27.1",
+    "clean-webpack-plugin": "0.1.6"
   },
   "devDependencies": {
     "assets-webpack-plugin": "3.5.1",
@@ -55,7 +56,6 @@
     "babel-preset-react": "6.3.13",
     "babel-preset-stage-0": "6.3.13",
     "babel-runtime": "6.3.19",
-    "clean-webpack-plugin": "0.1.6",
     "coveralls": "2.11.13",
     "eslint": "3.14.1",
     "eslint-loader": "1.6.1",
