@@ -203,9 +203,9 @@ def build_mutual_recommendation_vault_objects():
 	connect_db()
 	vaults = []
 
-	if SERVER_ENV == 'production' or SERVER_ENV == 'staging':
+	if os.environ.get('SERVER_ENV') == 'production':
 		objects = MutualFriend.objects
-	else:
+	elif os.environ.get('SERVER_ENV') == 'staging':
 		objects = MutualFriend.objects(account_id__in=[790, 28071, 45622])
 
 	for obj in objects:
