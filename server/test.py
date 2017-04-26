@@ -22,6 +22,36 @@ def _request_data(uri):
 	return df
 
 
+def _convert_to_double(X):
+    return np.ascontiguousarray(X, dtype=np.double)
+
+# def _calculate_matching_distance(X, offset, size):
+# 		s = X.shape
+# 		if len(s) != 2:
+# 				raise ValueError('A 2-dimensional array must be passed.')
+		
+# 		X = np.asarray(X, order='c')
+		
+# 		m, n = s
+# 		dm = np.zeros((m * (m - 1)) // 2, dtype=np.double)
+
+# 		X = _convert_to_double(X)
+		
+# 		k = offset
+# 		for i in xrange(offset, offset + size):
+# 			print 'i: ', i
+# 				for j in xrange(0, m):
+# 						print 'k: ', k
+# 						print 'j: ', j
+# 						if X[i].shape != X[j].shape:
+# 								raise ValueError('The 1d arrays must have equal lengths.')
+# 						dm[k] = (X[i] != X[j]).mean()
+# 						k = k + 1
+
+# 		pdb.set_trace()
+# 		return dm
+
+
 def _filtered_profile_matrix(df, profile, params):
 	df_copy = df.copy()
 	if params['location']:
@@ -57,12 +87,12 @@ def _manipulate_profile_matrix(df):
 		return df_profile_t
 
 
-def _calculate_similarity(df):
-		pdb.set_trace()
+def _calculate_similarity(df, offset, size):
+		# pdb.set_trace()
 		profile_D = distance.squareform(distance.pdist(df, metric='matching'))
 		pdb.set_trace()
 		
-		return profile_D
+		return profile_D #_calculate_matching_distance(df, offset, size)
 
 
 def process_interest_similarity(uri, type, params):
@@ -70,35 +100,37 @@ def process_interest_similarity(uri, type, params):
 
 		# df_profile_t = structured_df[structured_df.columns[4:]]
 		print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
-		pdb.set_trace()
-		df_interest_sim = _calculate_similarity(structured_df[structured_df.columns[4:]])
-		profile_len = len(structured_df[structured_df.columns[4:]].columns)
-		# del df_profile_t
-		# gc.collect()
+		row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
-		count = 1
-		prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']].copy()
-		del structured_df
-		gc.collect()
+		offset = 0
+		size = 3
 
-		for index, profile in prepared_df.iterrows():
-				sim_for_account = df_interest_sim[index].tolist()
-				sim_list = pd.Series(sim_for_account)
-				df = prepared_df.copy()
-				df['interest_similarity'] = 1 - sim_list.values
-				df['interest_count'] = (1 - sim_list.values) * profile_len
-				df['interest_count'] = df['interest_count'].astype(int)
+		for i in xrange(0, row_count, size):
+			df_interest_sim = _calculate_similarity(structured_df[structured_df.columns[4:]], i, size)
+			# del df_profile_t
+			# gc.collect()
 
-				df_profile_f = _filtered_profile_matrix(df, profile, params) #df[(df.location == '') | (df.location == 'empty') | (df.location.str.contains(profile.location))]
-				df_profile_r = df_profile_f.sort_values(by='interest_similarity', ascending=0)[1:10]
-				# update_interests_table(profile.account_id, df_profile_r, type)
-				print('Processed interest similarity: ', count)
-				count += 1
+			count = 1
+			prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']].copy()
+
+			for index, profile in prepared_df[i:(i+size)].iterrows():
+					print index
+					sim_for_account = df_interest_sim[index].tolist()
+					sim_list = pd.Series(sim_for_account)
+					df = prepared_df.copy()
+					df['interest_similarity'] = 1 - sim_list.values
+					df['interest_count'] = (1 - sim_list.values) * column_count
+					df['interest_count'] = df['interest_count'].astype(int)
+
+					df_profile_f = _filtered_profile_matrix(df, profile, params) #df[(df.location == '') | (df.location == 'empty') | (df.location.str.contains(profile.location))]
+					df_profile_r = df_profile_f.sort_values(by='interest_similarity', ascending=0)[1:10]
+					# update_interests_table(profile.account_id, df_profile_r, type)
+					print('Processed interest similarity for account: ', profile.account_id)
+					count += 1
 
 		del df_interest_sim
 		del prepared_df
 		gc.collect()
-
 
 
 

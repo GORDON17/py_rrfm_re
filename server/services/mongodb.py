@@ -203,7 +203,11 @@ def build_mutual_recommendation_vault_objects():
 	connect_db()
 	vaults = []
 
-	objects = MutualFriend.objects
+	if SERVER_ENV == 'production' or SERVER_ENV == 'staging':
+		objects = MutualFriend.objects
+	else:
+		objects = MutualFriend.objects(account_id__in=[790, 28071, 45622])
+
 	for obj in objects:
 		if obj.num_of_mutual_friends:
 			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_mutual_vault_context())
