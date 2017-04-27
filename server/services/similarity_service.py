@@ -316,9 +316,9 @@ from api_service import *
 
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
-				connections_data = APIService().request_filter(CONNECTIONS_FILTER)
-
 				print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
+				connections_data = APIService().request_filter(CONNECTIONS_FILTER)
+				decisions_data = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
 				offset = 0
@@ -336,7 +336,7 @@ def process_interest_similarity(uri, type, params):
 								df['interest_count'] = (1 - sim_list.values) * column_count
 								df['interest_count'] = df['interest_count'].astype(int)
 
-								df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data).sort_values(by='interest_similarity', ascending=0)[1:10]
+								df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data, decisions_data).sort_values(by='interest_similarity', ascending=0)[1:10]
 								del df
 								update_interests_table(profile.account_id, df_profile_r, type)
 								print('Processed interest similarity for account: ', profile.account_id)
@@ -345,7 +345,7 @@ def process_interest_similarity(uri, type, params):
 						del list_interest_sim
 
 
-def _filtered_profile_matrix(df, profile, params, connections_data):
+def _filtered_profile_matrix(df, profile, params, connections_data, decisions_data):
 		df_copy = df.copy()
 		if params['location'] and profile.location != 'empty':
 				df_copy = df_copy[(df_copy.location.str.contains(profile.location))] #(df_copy.location == '') | (df_copy.location == 'empty') | 
@@ -356,7 +356,7 @@ def _filtered_profile_matrix(df, profile, params, connections_data):
 		if params['nationality'] and profile.nationality != 'empty':
 				df_copy = df_copy[(df_copy.nationality == profile.nationality)]
 
-		df_copy = df_copy[df_copy.account_id != _isNotConnected(profile.account_id, df_copy.account_id, connections_data)]
+		df_copy = df_copy[(df_copy.account_id != _isConnected(profile.account_id, df_copy.account_id, connections_data)) & (df_copy.account_id != _isDecided(profile.account_id, df_copy.account_id, decisions_data))]
 
 		return df_copy
 
@@ -415,9 +415,15 @@ def _calculate_matching_distance(X, offset, size):
 
 		return results
 
-def _isNotConnected(account_id, user_id, connections_data):
+def _isConnected(account_id, user_id, connections_data):
 		if connections_data.get(str(account_id)) is None or connections_data[str(account_id)]['connections'].get(str(user_id)) is None:
 				return 0
 		
 		return user_id if connections_data[str(account_id)]['connections'][str(user_id)] == 1 else 0
+
+def _isDecided(account_id, user_id, decisions_data):
+	if decisions_data.get(str(account_id)) is None or decisions_data[str(account_id)]['decisions'].get(str(user_id)) is None:
+		return 0
+
+	return user_id if decisions_data[str(account_id)]['decisions'][str(user_id)] == 1 or decisions_data[str(account_id)]['decisions'][str(user_id)] == 2 else 0
 
