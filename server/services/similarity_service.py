@@ -312,10 +312,11 @@ def _events_matrix_with_loc(location, uri):
 
 # refactor for performance
 from mongodb import update_interests_table
+from api_service import *
 
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
-				connections_data = _request_filter(CONNECTIONS_FILTER)
+				connections_data = APIService().request_filter(CONNECTIONS_FILTER)
 
 				print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
@@ -413,12 +414,6 @@ def _calculate_matching_distance(X, offset, size):
 				c = c + 1
 
 		return results
-
-def _request_filter(uri):
-		print ("Sending request to:", uri)
-		request = Request(uri)
-		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
-		return json.loads(urlopen(request).read())
 
 def _isNotConnected(account_id, user_id, connections_data):
 		if connections_data.get(str(account_id)) is None or connections_data[str(account_id)]['connections'].get(str(user_id)) is None:
