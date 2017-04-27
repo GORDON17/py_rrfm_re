@@ -9,6 +9,7 @@ EVENT_TYPES_URI = BASE_URI + "api/v4/re/events/types"
 CONNECTIONS_URI = BASE_URI + "api/v4/re/connections"
 ACCOUNTS_URI = BASE_URI + "api/v4/re/accounts"
 MONTH_COUNT_URI = BASE_URI + "api/v4/re/month-count"
+CONNECTIONS_FILTER = BASE_URI + "api/v4/re/filters/connections"
 
 
 VAULT_URI = os.environ.get('VAULT_URI') or "http://testvault.ivy.com"

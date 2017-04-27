@@ -315,6 +315,7 @@ from mongodb import update_interests_table
 
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
+				connections_data = _request_connections_filter(CONNECTIONS_FILTER)
 
 				print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
@@ -334,7 +335,7 @@ def process_interest_similarity(uri, type, params):
 								df['interest_count'] = (1 - sim_list.values) * column_count
 								df['interest_count'] = df['interest_count'].astype(int)
 
-								df_profile_r = _filtered_profile_matrix(df, profile, params).sort_values(by='interest_similarity', ascending=0)[1:10]
+								df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data).sort_values(by='interest_similarity', ascending=0)[1:10]
 								del df
 								update_interests_table(profile.account_id, df_profile_r, type)
 								print('Processed interest similarity for account: ', profile.account_id)
@@ -343,16 +344,18 @@ def process_interest_similarity(uri, type, params):
 						del list_interest_sim
 
 
-def _filtered_profile_matrix(df, profile, params):
+def _filtered_profile_matrix(df, profile, params, connections_data):
 		df_copy = df.copy()
-		if params['location']:
+		if params['location'] && profile.location != 'empty':
 				df_copy = df_copy[(df_copy.location.str.contains(profile.location))] #(df_copy.location == '') | (df_copy.location == 'empty') | 
 
-		if params['chapter']:
+		if params['chapter'] && profile.chapter != 0:
 				df_copy = df_copy[(df_copy.chapter == profile.chapter)]
 
-		if params['nationality']:
+		if params['nationality'] && profile.nationality != 'empty':
 				df_copy = df_copy[(df_copy.nationality == profile.nationality)]
+
+		df_copy = df_copy[df_copy.account_id != _isNotConnected(profile.account_id, df_copy.account_id, connections_data)]
 
 		return df_copy
 
@@ -411,4 +414,15 @@ def _calculate_matching_distance(X, offset, size):
 
 		return results
 
+def _request_connections_filter(uri):
+		print ("Sending request to:", uri)
+		request = Request(uri)
+		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
+		return json.loads(urlopen(request).read())
+
+def _isNotConnected(account_id, user_id, connections_data):
+		if connections_data.get(str(account_id)) is None or connections_data[str(account_id)]['connections'].get(str(user_id)) is None:
+				return 0
+		
+		return user_id if connections_data[str(account_id)]['connections'][str(user_id)] == 1 else 0
 
