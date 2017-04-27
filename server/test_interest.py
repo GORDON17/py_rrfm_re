@@ -27,13 +27,13 @@ def _request_data(uri):
 
 def _filtered_profile_matrix(df, profile, params, connections_data):
 		df_copy = df.copy()
-		if params['location']:
+		if params['location'] and profile.location != 'empty':
 				df_copy = df_copy[(df_copy.location.str.contains(profile.location))] #(df_copy.location == '') | (df_copy.location == 'empty') | 
 
-		if params['chapter']:
+		if params['chapter'] and profile.chapter != 0:
 				df_copy = df_copy[(df_copy.chapter == profile.chapter)]
 
-		if params['nationality']:
+		if params['nationality'] and profile.nationality != 'empty':
 				df_copy = df_copy[(df_copy.nationality == profile.nationality)]
 
 		df_copy = df_copy[df_copy.account_id != _isNotConnected(profile.account_id, df_copy.account_id, connections_data)]

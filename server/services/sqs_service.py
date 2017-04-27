@@ -4,6 +4,8 @@ from configurations.env_configs import *
 
 class SQSService:
 	def __init__(self):
+		super(SQSService, self).__init__()
+		
 		self.session = Session(
             aws_access_key_id = AWS_ACCESS_KEY_ID,
             aws_secret_access_key = AWS_SERET_ACCESS_KEY,

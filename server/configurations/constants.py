@@ -14,3 +14,14 @@ INTEREST_TYPES = {
 	'BUSINESS': 'business',
 	'LIFESTYLE': 'lifestyle'
 }
+
+INTRODUCTION_TYPES = {
+	
+}
+
+OBJECT_TYPES = {
+	'ACCOUNT': 'Account',
+	'EXPERIENCE': 'Experience',
+	'FEED': 'Feed',
+	'POST': 'Post'
+}

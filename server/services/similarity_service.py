@@ -315,7 +315,7 @@ from mongodb import update_interests_table
 
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
-				connections_data = _request_connections_filter(CONNECTIONS_FILTER)
+				connections_data = _request_filter(CONNECTIONS_FILTER)
 
 				print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
@@ -414,7 +414,7 @@ def _calculate_matching_distance(X, offset, size):
 
 		return results
 
-def _request_connections_filter(uri):
+def _request_filter(uri):
 		print ("Sending request to:", uri)
 		request = Request(uri)
 		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)

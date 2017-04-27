@@ -22,11 +22,11 @@ class InterestSimilarity(DynamicDocument):
 	def to_vault_object(self):
 		return {
 			'id': self.user_id,
-			'type': "user"
+			'type': "Account"
 		}
 
 	def to_vault_target(self):
 		return {
 			'id': self.account_id,
-			'type': "user"
+			'type': "Account"
 		}

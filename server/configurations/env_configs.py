@@ -10,6 +10,7 @@ CONNECTIONS_URI = BASE_URI + "api/v4/re/connections"
 ACCOUNTS_URI = BASE_URI + "api/v4/re/accounts"
 MONTH_COUNT_URI = BASE_URI + "api/v4/re/month-count"
 CONNECTIONS_FILTER = BASE_URI + "api/v4/re/filters/connections"
+DECISIONS_FILTER = BASE_URI + "api/v4/re/filters/decisions"
 
 
 VAULT_URI = os.environ.get('VAULT_URI') or "http://testvault.ivy.com"
@@ -18,4 +19,4 @@ AWS_SERET_ACCESS_KEY = os.environ.get('AWS_SERET_ACCESS_KEY')
 AWS_REGION_NAME = os.environ.get('AWS_REGION_NAME')
 SQS_QUEUE_URL = os.environ.get('SQS_QUEUE_URL')
 
-BATCH_SIZE = os.environ.get('BATCH_SIZE') or 1000
+BATCH_SIZE = os.environ.get('BATCH_SIZE') or 500

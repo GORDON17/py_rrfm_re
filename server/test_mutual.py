@@ -113,7 +113,7 @@ def _enqueue(queue, visited, arr, level):
 
 
 
-from account_service import *
+from services.account_service import *
 from collections import OrderedDict
 
 def _graph(uri):
@@ -203,7 +203,7 @@ def _bfs(graph, user_id, user_data, params, decisions):
                     }
     return OrderedDict(sorted(commons.items(), key=lambda x: (x[1]['num_of_commons'], -x[1]['level']), reverse=True)[0:20])
 
-from mongodb import update_mutual_friend_recommendations
+# from mongodb import update_mutual_friend_recommendations
 
 def process_mutual_friends(uri, params):
     networks = _graph(uri)
@@ -213,15 +213,19 @@ def process_mutual_friends(uri, params):
         print("processing mutual friends for account: ", key)
 
         best_recommendations = _bfs(networks, key, value, params, decisions)
-        update_mutual_friend_recommendations(best_recommendations)
+        # update_mutual_friend_recommendations(best_recommendations)
         print("finished mutual friends for account: ", key)
 
 
 
+if __name__ == '__main__':
+    uri = 'http://0.0.0.0:3000/api/v4/re/connections'
+    params = {
+        'location': True,
+        'chapter': True,
+        'nationality': True
+    }
+    process_mutual_friends(uri, params)
 
-# for mutual friend api
-def api_process_mutuals_for(id, uri):
-    g = _graph(uri)
-    results = _bfs(g, id)
 
-    return results
+
