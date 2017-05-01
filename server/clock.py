@@ -10,7 +10,7 @@ hour_offset_6 = int(os.environ.get('G_HOUR')) + 6
 @scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
 def social_interest_similarity_job_with_lcn():
 	params = {
-		'location': True,
+		'location': False,
 		'chapter': True,
 		'nationality': True
 	}
@@ -24,7 +24,7 @@ def social_interest_similarity_job_with_lcn():
 @scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=hour_offset_6, minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
 def mutual_friend_job_with_lcn():
 	params = {
-		'location': True,
+		'location': False,
 		'chapter': True,
 		'nationality': True
 	}
