@@ -12,7 +12,7 @@ def social_interest_similarity_job_with_lcn():
 	params = {
 		'location': False,
 		'chapter': True,
-		'nationality': True
+		'nationality': False
 	}
 	try:
 		print "social_interest_similarity_job_with_lcn is running."
@@ -26,7 +26,7 @@ def mutual_friend_job_with_lcn():
 	params = {
 		'location': False,
 		'chapter': True,
-		'nationality': True
+		'nationality': False
 	}
 	try:
 		print "mutual_friend_job_with_lcn is running."
