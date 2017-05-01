@@ -189,7 +189,7 @@ def build_interest_recommendation_vault_objects():
 	connect_db()
 	vaults = []
 
-	if os.environ.get('SERVER_ENV') == 'production':
+	if os.environ.get('SERVER_ENV') == 'production' or (os.environ.get('SERVER_ENV') == 'staging' and os.environ.get('FULL_TEST') == 'true'):
 		objects = InterestSimilarity.objects
 	elif os.environ.get('SERVER_ENV') == 'staging':
 		objects = InterestSimilarity.objects(account_id__in=[790, 28071, 45622])
@@ -207,9 +207,9 @@ def build_mutual_recommendation_vault_objects():
 	connect_db()
 	vaults = []
 
-	if os.environ.get('SERVER_ENV') == 'production':
+	if os.environ.get('SERVER_ENV') == 'production' or (os.environ.get('SERVER_ENV') == 'staging' and os.environ.get('FULL_TEST') == 'true'):
 		objects = MutualFriend.objects
-	elif os.environ.get('SERVER_ENV') == 'staging':
+	elif os.environ.get('SERVER_ENV') == 'staging' and os.environ.get('FULL_TEST') != 'true':
 		objects = MutualFriend.objects(account_id__in=[790, 28071, 45622])
 
 	for obj in objects:
