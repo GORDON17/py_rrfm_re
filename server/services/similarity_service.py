@@ -316,7 +316,8 @@ from api_service import *
 
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
-				print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
+				print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
+
 				connections_data = APIService().request_filter(CONNECTIONS_FILTER)
 				decisions_data = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
@@ -337,27 +338,33 @@ def process_interest_similarity(uri, type, params):
 								df['interest_count'] = df['interest_count'].astype(int)
 
 								df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data, decisions_data).sort_values(by='interest_similarity', ascending=0)[1:10]
-								del df
 								update_interests_table(profile.account_id, df_profile_r, type)
-								print('Processed interest similarity for account: ', profile.account_id)
+								del df
+								print count, 'Processed interest similarity for account: ', profile.account_id
 								count += 1
 
 						del list_interest_sim
 
 
 def _filtered_profile_matrix(df, profile, params, connections_data, decisions_data):
-		df_copy = df.copy()
+		print 'Account: ', profile.account_id, 'Before filtering: ', df.shape
+		df_copy = copy.deepcopy(df)
+
 		if params['location'] and profile.location != 'empty':
 				df_copy = df_copy[(df_copy.location.str.contains(profile.location))] #(df_copy.location == '') | (df_copy.location == 'empty') | 
+				print 'Filtered by location: ', profile.location, 'Total left: ', df_copy.shape
 
 		if params['chapter'] and profile.chapter != 0:
 				df_copy = df_copy[(df_copy.chapter == profile.chapter)]
+				print 'Filtered by chapter: ', profile.chapter, 'Total left: ', df_copy.shape
 
 		if params['nationality'] and profile.nationality != 'empty':
 				df_copy = df_copy[(df_copy.nationality == profile.nationality)]
+				print 'Filtered by nationality: ', profile.nationality, 'Total left: ', df_copy.shape
 
-		df_copy = df_copy[(df_copy.account_id != _isConnected(profile.account_id, df_copy.account_id, connections_data)) & (df_copy.account_id != _isDecided(profile.account_id, df_copy.account_id, decisions_data))]
+		df_copy = df_copy[(df_copy.account_id != _isConnected(profile.account_id, df_copy.account_id, connections_data)) | (df_copy.account_id != _isDecided(profile.account_id, df_copy.account_id, decisions_data))]
 
+		print 'Account: ', profile.account_id, 'After filtering: ', df_copy.shape
 		return df_copy
 
 
@@ -366,6 +373,8 @@ def _manipulate_profile_matrix(df):
 		df_profile[['account_id']] = df_profile[['account_id']].astype(int)
 		df_profile[['chapter']] = df_profile[['chapter']].astype(int)
 		df_profile['location'].fillna('empty', inplace=True)
+		df_profile[['nationality']] = df_profile[['nationality']].astype(str)
+		df_profile['nationality'] = df['nationality'].str.strip()
 		df_profile['nationality'].fillna('empty', inplace=True)
 		df_profile['chapter'].fillna(0, inplace=True)
 		df_profile_t = pd.pivot_table(df_profile.copy(), index=['account_id', 'location', 'nationality', 'chapter'], columns=['social'], values='indicator')

@@ -124,8 +124,8 @@ def _graph(uri):
         requestor_id = int(connection['requestor_id'])
         account_chapter = int(connection['account_chapter'])
         requestor_chapter = int(connection['requestor_chapter'])
-        account_nationality = connection['account_nationality']
-        requestor_nationality = connection['requestor_nationality']
+        account_nationality = str(connection['account_nationality']).strip()
+        requestor_nationality = str(connection['requestor_nationality']).strip()
 
         if account_id in hash.keys():
             hash[account_id]['connections'].append(requestor_id)

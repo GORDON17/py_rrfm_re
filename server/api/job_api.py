@@ -47,12 +47,12 @@ class JobGenerateAPI(Resource):
 					'nationality': json_data['nationality']
 				}
 
-				scheduler_generate.add_job(g_social_interest_similarity_job, 'cron', args=[params],
-												day_of_week=day, 
-												hour=hour, 
-												minute=minute,
-												id='0',
-												name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
+				# scheduler_generate.add_job(g_social_interest_similarity_job, 'cron', args=[params],
+				# 								day_of_week=day, 
+				# 								hour=hour, 
+				# 								minute=minute,
+				# 								id='0',
+				# 								name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
 				scheduler_generate.add_job(g_mutual_friends_job, 'cron', args=[params],
 												day_of_week=day, 
 												hour=hour, 

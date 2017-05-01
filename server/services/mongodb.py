@@ -82,6 +82,7 @@ def update_events_table(id, df):
 def update_interests_table(id, df, type):
 	time_now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+	count = 0
 	for index, row in df.iterrows():
 		if id == row['account_id']:
 			continue
@@ -116,6 +117,8 @@ def update_interests_table(id, df, type):
 																set__lifestyle_interest_similarity=interest_similarity,
 																set__created_at=time_now) \
 												.save()
+		count += 1
+	print 'Saved', count, 'interest similarity for account: ', id
 
 	# print ("Updated:", InterestSimilarity.objects.count())
 
