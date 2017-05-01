@@ -2,7 +2,7 @@ import json
 from boto3.session import Session
 from configurations.env_configs import *
 
-class SQSService:
+class SQSService(object):
 	def __init__(self):
 		super(SQSService, self).__init__()
 		
