@@ -194,12 +194,14 @@ def build_interest_recommendation_vault_objects():
 
 	if os.environ.get('SERVER_ENV') == 'production' or (os.environ.get('SERVER_ENV') == 'staging' and os.environ.get('FULL_TEST') == 'true'):
 		objects = InterestSimilarity.objects
-	elif os.environ.get('SERVER_ENV') == 'staging':
+	elif os.environ.get('SERVER_ENV') == 'staging' and os.environ.get('FULL_TEST') != 'true':
 		objects = InterestSimilarity.objects(account_id__in=[790, 28071, 45622])
 
 	for obj in objects:
-		if obj.social_interest_similarity and obj.social_interest_count:
-			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_social_interest_vault_context())
+		if (obj.social_interest_similarity != 0 and obj.social_interest_count != 0) or \
+				(obj.business_interest_similarity != 0 and obj.business_interest_count != 0) or \
+				(obj.lifestyle_interest_similarity != 0 and obj.lifestyle_interest_count != 0):
+			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_social_interest_vault_context(), obj.to_vault_weight())
 			vaults.append(vault)
 
 	disconnect_db()
@@ -216,15 +218,15 @@ def build_mutual_recommendation_vault_objects():
 		objects = MutualFriend.objects(account_id__in=[790, 28071, 45622])
 
 	for obj in objects:
-		if obj.num_of_mutual_friends:
-			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_mutual_vault_context())
+		if obj.num_of_mutual_friends != 0:
+			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_mutual_vault_context(), obj.to_vault_weight())
 			vaults.append(vault)
 
 	disconnect_db()
 	return vaults
 
 
-def _build_vault_object(obj, target, context):
+def _build_vault_object(obj, target, context, weight):
 	return	{
 						'actor': {
 							'type': "Service",
@@ -232,7 +234,8 @@ def _build_vault_object(obj, target, context):
 			    	},
 			    	'object': obj,
 			    	'target': target,
-			    	'context': context
+			    	'context': context,
+			    	'weight': weight
 					}
 
 

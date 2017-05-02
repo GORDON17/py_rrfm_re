@@ -27,3 +27,6 @@ class MutualFriend(DynamicDocument):
 			'status': "unread",
 			'algorithm': "mutual_friend"
 		}
+
+	def to_vault_weight(self):
+		return self.num_of_mutual_friends - (1.6 * self.connection_level)
