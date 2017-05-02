@@ -104,24 +104,26 @@ from multiprocessing import Process
 # 		p = Process(target=mp_process_interest_similarity, args=())
 # 		p.start()
 
-def g_social_interest_similarity_job(params):
-		p = Process(target=mp_process_social_interest_similarity, args=(params,))
+def g_all_interest_similarity_job(params):
+		p = Process(target=mp_process_all_interest_similarity, args=(params,))
 		p.start()
 
-def mp_process_social_interest_similarity(params):
+def mp_process_all_interest_similarity(params):
 		connect_db()
 		job_id = '0'
-		job_name = JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY']
-		print('g_social_interest_similarity job is pendding.')
+		job_name = JOB['GENERATE']['ALL_INTEREST_SIMILARITY']
+		print('g_all_interest_similarity job is pendding.')
 
 		job_obj_id = add_job(job_id=job_id, name=job_name)
 		
-		print('g_social_interest_similarity job is running.')
+		print('g_all_interest_similarity job is running.')
 		process_interest_similarity(SOCIAL_INTERESTS_URI, INTEREST_TYPES['SOCIAL'], params)
+		process_interest_similarity(BUSINESS_INTERESTS_URI, INTEREST_TYPES['BUSINESS'], params)
+		process_interest_similarity(LIFESTYLE_INTERESTS_URI, INTEREST_TYPES['LIFESTYLE'], params)
 
 		if job_obj_id:
 			update_job_state(job_obj_id=job_obj_id, state=1)
-			print('g_social_interest_similarity job is finished.')
+			print('g_all_interest_similarity job is finished.')
 		else:
 			print('there is no such job')
 

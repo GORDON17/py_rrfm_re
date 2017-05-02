@@ -7,21 +7,21 @@ from apscheduler.schedulers.background import BlockingScheduler
 scheduler = BlockingScheduler()
 # hour_offset_6 = int(os.environ.get('G_HOUR')) + 6
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
-def social_interest_similarity_job_with_lcn():
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
+def all_interest_similarity_job_with_lcn():
 	params = {
 		'location': False,
 		'chapter': True,
 		'nationality': False
 	}
 	try:
-		print "social_interest_similarity_job_with_lcn is running."
-		g_social_interest_similarity_job(params)
+		print "all_interest_similarity_job_with_lcn is running."
+		g_all_interest_similarity_job(params)
 	except:
-		print "social_interest_similarity_job_with_lcn is failed!"
+		print "all_interest_similarity_job_with_lcn is failed!"
 
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR_OFFSET'), minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR_OFFSET'), minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['MUTUAL_FRIEND'])
 def mutual_friend_job_with_lcn():
 	params = {
 		'location': False,
@@ -35,7 +35,7 @@ def mutual_friend_job_with_lcn():
 		print "mutual_friend_job_with_lcn is failed!"
 
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='11', name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='11', name=JOB['RETRIEVE']['ALL_INTEREST_SIMILARITY'])
 def interest_similarity_sqs_job():
 	try:
 		print "interest_similarity_sqs_job is running."
@@ -43,7 +43,7 @@ def interest_similarity_sqs_job():
 	except:
 		print "interest_similarity_sqs_job is failed!"
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR_OFFSET'), minute=os.environ.get('R_MINUTE'), id='12', name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR_OFFSET'), minute=os.environ.get('R_MINUTE'), id='12', name=JOB['RETRIEVE']['MUTUAL_FRIEND'])
 def mutual_friend_sqs_job():
 	try:
 		print "mutual_friend_sqs_job is running."
