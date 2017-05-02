@@ -201,7 +201,7 @@ def _bfs(graph, user_id, user_data, params, decisions):
                         'level': current['level'],
                         'num_of_commons': len(mutuals)
                     }
-    return OrderedDict(sorted(commons.items(), key=lambda x: (x[1]['num_of_commons'], -x[1]['level']), reverse=True)[0:20])
+    return OrderedDict(sorted(commons.items(), key=lambda x: (x[1]['num_of_commons'], -x[1]['level']), reverse=True)[0:5])
 
 from mongodb import update_mutual_friend_recommendations
 
