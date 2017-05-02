@@ -20,8 +20,6 @@ INTRODUCTION_TYPES = {
 }
 
 OBJECT_TYPES = {
-	'ACCOUNT': 'Account',
-	'EXPERIENCE': 'Experience',
-	'FEED': 'Feed',
-	'POST': 'Post'
+	'USER': 'user',
+	'EVENT': 'event'
 }

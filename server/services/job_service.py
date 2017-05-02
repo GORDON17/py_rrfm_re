@@ -164,8 +164,8 @@ def mp_retrieve_interest_similarity():
 	vaults = build_interest_recommendation_vault_objects()
 	sqs = SQSService()
 
-	for i in xrange(0, 100, 10):
-		sqs.push_objects_into_vault(vaults[i:i + 10])
+	for i in xrange(0, len(vaults), SIZE):
+		sqs.push_objects_into_vault(vaults[i:i + SIZE])
 
 
 def r_mutual_friend_job():
@@ -176,8 +176,8 @@ def mp_retrieve_mutual_friend():
 	vaults = build_mutual_recommendation_vault_objects()
 	sqs = SQSService()
 
-	for i in xrange(0, 100, 10):
-		sqs.push_objects_into_vault(vaults[i:i + 10])
+	for i in xrange(0, len(vaults), SIZE):
+		sqs.push_objects_into_vault(vaults[i:i + SIZE])
 
 
 # @sched.scheduled_job('interval', minutes=0.1, id='0', name='social_interest_similarity')

@@ -1,5 +1,6 @@
 from mongoengine import *
 from vault_templates import mutual_template
+from configurations.constants import OBJECT_TYPES
 
 class MutualFriend(DynamicDocument):
 	account_id = IntField(required=True)
@@ -11,13 +12,13 @@ class MutualFriend(DynamicDocument):
 	def to_vault_object(self):
 		return {
 			'id': self.user_id,
-			'type': "Account"
+			'type': OBJECT_TYPES['USER']
 		}
 
 	def to_vault_target(self):
 		return {
 			'id': self.account_id,
-			'type': "Account"
+			'type': OBJECT_TYPES['USER']
 		}
 
 	def to_mutual_vault_context(self):
