@@ -43,7 +43,7 @@ def interest_similarity_sqs_job():
 	except:
 		print "interest_similarity_sqs_job is failed!"
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='12', name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR_OFFSET'), minute=os.environ.get('R_MINUTE'), id='12', name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
 def mutual_friend_sqs_job():
 	try:
 		print "mutual_friend_sqs_job is running."
