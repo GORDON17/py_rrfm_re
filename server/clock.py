@@ -1,5 +1,5 @@
 import os
-from configurations.constants import *
+from configurations.constants import JOB
 from services.job_service import *
 
 from apscheduler.schedulers.background import BlockingScheduler
