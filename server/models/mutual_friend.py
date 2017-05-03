@@ -23,9 +23,16 @@ class MutualFriend(DynamicDocument):
 
 	def to_mutual_vault_context(self):
 		return {
-			'text': mutual_template(self),
+			'text': mutual_template(self.user_id, self.num_of_mutual_friends),
 			'status': "unread",
 			'algorithm': "mutual_friend"
+		}
+
+	def to_mutual_vault_context_ops(self):
+		return {
+			'text': mutual_template(self.account_id, self.num_of_mutual_friends),
+			'status': "unread",
+			'algorithm': "mutual_friend_ops"
 		}
 
 	def to_vault_weight(self):

@@ -201,7 +201,10 @@ def build_interest_recommendation_vault_objects():
 		if (obj.social_interest_similarity != 0 and obj.social_interest_count != 0) or \
 				(obj.business_interest_similarity != 0 and obj.business_interest_count != 0) or \
 				(obj.lifestyle_interest_similarity != 0 and obj.lifestyle_interest_count != 0):
-			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_social_interest_vault_context(), obj.to_vault_weight())
+			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_interest_vault_context(), obj.to_vault_weight())
+			vaults.append(vault)
+
+			vault = _build_vault_object(obj.to_vault_target(), obj.to_vault_object(), obj.to_interest_vault_context_ops(), obj.to_vault_weight())
 			vaults.append(vault)
 
 	disconnect_db()
@@ -220,6 +223,9 @@ def build_mutual_recommendation_vault_objects():
 	for obj in objects:
 		if obj.num_of_mutual_friends != 0:
 			vault = _build_vault_object(obj.to_vault_object(), obj.to_vault_target(), obj.to_mutual_vault_context(), obj.to_vault_weight())
+			vaults.append(vault)
+
+			vault = _build_vault_object(obj.to_vault_target(), obj.to_vault_object(), obj.to_mutual_vault_context_ops(), obj.to_vault_weight())
 			vaults.append(vault)
 
 	disconnect_db()

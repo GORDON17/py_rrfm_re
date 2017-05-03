@@ -13,11 +13,18 @@ class InterestSimilarity(DynamicDocument):
 	lifestyle_interest_count = IntField(default=0)
 	created_at = DateTimeField(required=True)
 
-	def to_social_interest_vault_context(self):
+	def to_interest_vault_context(self):
 		return {
-			'text': social_interest_template(self),
+			'text': interest_template(self.user_id, self.to_vault_weight()),
 			'status': "unread",
 			'algorithm': "social_interest_similarity"
+		}
+
+	def to_interest_vault_context_ops(self):
+		return {
+			'text': interest_template(self.account_id, self.to_vault_weight()),
+			'status': "unread",
+			'algorithm': "social_interest_similarity_ops"
 		}
 
 	def to_vault_object(self):

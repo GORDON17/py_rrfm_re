@@ -153,6 +153,7 @@ def _graph(uri):
                 'nationality': requestor_nationality
             }
 
+    print "Structured graph: ", len(hash)
     return hash
 
 
