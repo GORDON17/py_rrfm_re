@@ -1,5 +1,5 @@
 from mongoengine import *
-from vault_templates import social_interest_template
+from vault_templates import interest_template
 from configurations.constants import (OBJECT_TYPES, INTEREST_TYPES)
 
 class InterestSimilarity(DynamicDocument):
