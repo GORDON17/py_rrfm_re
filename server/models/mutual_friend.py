@@ -32,7 +32,7 @@ class MutualFriend(DynamicDocument):
 		return {
 			'text': mutual_template(self.account_id, self.num_of_mutual_friends),
 			'status': "unread",
-			'algorithm': "mutual_friend_ops"
+			'algorithm': "mutual_friend"
 		}
 
 	def to_vault_weight(self):

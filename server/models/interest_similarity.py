@@ -24,7 +24,7 @@ class InterestSimilarity(DynamicDocument):
 		return {
 			'text': interest_template(self.account_id, self.to_vault_weight()),
 			'status': "unread",
-			'algorithm': "social_interest_similarity_ops"
+			'algorithm': "social_interest_similarity"
 		}
 
 	def to_vault_object(self):
