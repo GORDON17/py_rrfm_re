@@ -118,8 +118,8 @@ def mp_process_all_interest_similarity(params):
 		
 		print('g_all_interest_similarity job is running.')
 		process_interest_similarity(SOCIAL_INTERESTS_URI, INTEREST_TYPES['SOCIAL'], params)
-		process_interest_similarity(BUSINESS_INTERESTS_URI, INTEREST_TYPES['BUSINESS'], params)
-		process_interest_similarity(LIFESTYLE_INTERESTS_URI, INTEREST_TYPES['LIFESTYLE'], params)
+		# process_interest_similarity(BUSINESS_INTERESTS_URI, INTEREST_TYPES['BUSINESS'], params)
+		# process_interest_similarity(LIFESTYLE_INTERESTS_URI, INTEREST_TYPES['LIFESTYLE'], params)
 
 		if job_obj_id:
 			update_job_state(job_obj_id=job_obj_id, state=1)
