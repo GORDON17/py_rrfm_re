@@ -23,17 +23,21 @@ class MutualFriend(DynamicDocument):
 
 	def to_mutual_vault_context(self):
 		return {
-			'text': mutual_template(self.user_id, self.num_of_mutual_friends),
+			'text': mutual_template(True, self.user_id, self.num_of_mutual_friends),
+			'markup': mutual_template(False, self.user_id, self.num_of_mutual_friends),
 			'status': "unread",
-			'algorithm': "mutual_friend"
+			'algorithm': "mutual_friend",
+			'weight': to_vault_weight()
 		}
 
 	def to_mutual_vault_context_ops(self):
 		return {
-			'text': mutual_template(self.account_id, self.num_of_mutual_friends),
+			'text': mutual_template(True, self.account_id, self.num_of_mutual_friends),
+			'markup': mutual_template(False, self.account_id, self.num_of_mutual_friends),
 			'status': "unread",
-			'algorithm': "mutual_friend"
+			'algorithm': "mutual_friend",
+			'weight': to_vault_weight()
 		}
 
-	def to_vault_weight(self):
+	def to_vault_weight():
 		return self.num_of_mutual_friends - (1.6 * self.connection_level)

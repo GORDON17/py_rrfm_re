@@ -15,16 +15,20 @@ class InterestSimilarity(DynamicDocument):
 
 	def to_interest_vault_context(self):
 		return {
-			'text': interest_template(self.user_id, self.to_vault_weight()),
+			'text': interest_template(True, self.user_id, self.to_vault_weight()),
+			'markup': interest_template(False, self.user_id, self.to_vault_weight()),
 			'status': "unread",
-			'algorithm': "social_interest_similarity"
+			'algorithm': "social_interest_similarity",
+			'weight': to_vault_weight()
 		}
 
 	def to_interest_vault_context_ops(self):
 		return {
-			'text': interest_template(self.account_id, self.to_vault_weight()),
+			'text': interest_template(True, self.account_id, self.to_vault_weight()),
+			'markup': interest_template(False, self.account_id, self.to_vault_weight()),
 			'status': "unread",
-			'algorithm': "social_interest_similarity"
+			'algorithm': "social_interest_similarity",
+			'weight': to_vault_weight()
 		}
 
 	def to_vault_object(self):
@@ -39,7 +43,7 @@ class InterestSimilarity(DynamicDocument):
 			'type': OBJECT_TYPES['USER']
 		}
 
-	def to_vault_weight(self):
+	def to_vault_weight():
 		count = 0
 		if self.social_interest_similarity != 0:
 			count += 1
