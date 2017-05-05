@@ -5,7 +5,7 @@ def interest_template(isPlain, user_id, sim_percent):
 		text = "Talk to {{user-%d}} as you have %d%% interests in common!" \
 					% (user_id, percent)
 	else:
-		markup = "Talk to <b>{{user-%d}}</b> as you have %d%% interests in common!" \
+		text = "Talk to <b>{{user-%d}}</b> as you have %d%% interests in common!" \
 					% (user_id, percent)
 
 	return text
