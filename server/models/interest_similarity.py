@@ -19,7 +19,7 @@ class InterestSimilarity(DynamicDocument):
 			'markup': interest_template(False, self.user_id, self.to_vault_weight()),
 			'status': "unread",
 			'algorithm': "social_interest_similarity",
-			'weight': to_vault_weight()
+			'weight': self.to_vault_weight()
 		}
 
 	def to_interest_vault_context_ops(self):
@@ -28,7 +28,7 @@ class InterestSimilarity(DynamicDocument):
 			'markup': interest_template(False, self.account_id, self.to_vault_weight()),
 			'status': "unread",
 			'algorithm': "social_interest_similarity",
-			'weight': to_vault_weight()
+			'weight': self.to_vault_weight()
 		}
 
 	def to_vault_object(self):
@@ -43,7 +43,7 @@ class InterestSimilarity(DynamicDocument):
 			'type': OBJECT_TYPES['USER']
 		}
 
-	def to_vault_weight():
+	def to_vault_weight(self):
 		count = 0
 		if self.social_interest_similarity != 0:
 			count += 1

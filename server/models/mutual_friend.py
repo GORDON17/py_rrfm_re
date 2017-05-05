@@ -27,7 +27,7 @@ class MutualFriend(DynamicDocument):
 			'markup': mutual_template(False, self.user_id, self.num_of_mutual_friends),
 			'status': "unread",
 			'algorithm': "mutual_friend",
-			'weight': to_vault_weight()
+			'weight': self.to_vault_weight()
 		}
 
 	def to_mutual_vault_context_ops(self):
@@ -36,8 +36,8 @@ class MutualFriend(DynamicDocument):
 			'markup': mutual_template(False, self.account_id, self.num_of_mutual_friends),
 			'status': "unread",
 			'algorithm': "mutual_friend",
-			'weight': to_vault_weight()
+			'weight': self.to_vault_weight()
 		}
 
-	def to_vault_weight():
+	def to_vault_weight(self):
 		return self.num_of_mutual_friends - (1.6 * self.connection_level)
