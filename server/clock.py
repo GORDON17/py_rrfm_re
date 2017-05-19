@@ -7,7 +7,8 @@ from apscheduler.schedulers.background import BlockingScheduler
 scheduler = BlockingScheduler()
 # hour_offset_6 = int(os.environ.get('G_HOUR')) + 6
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
+# day_of_week=os.environ.get('G_DAY'), 
+@scheduler.scheduled_job('cron', hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
 def all_interest_similarity_job_with_lcn():
 	params = {
 		'location': False,
@@ -20,8 +21,8 @@ def all_interest_similarity_job_with_lcn():
 	except:
 		print "all_interest_similarity_job_with_lcn is failed!"
 
-
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('G_DAY'), hour=os.environ.get('G_HOUR_OFFSET'), minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['MUTUAL_FRIEND'])
+# day_of_week=os.environ.get('G_DAY'), 
+@scheduler.scheduled_job('cron', hour=os.environ.get('G_HOUR_OFFSET'), minute=os.environ.get('G_MINUTE'), id='02', name=JOB['GENERATE']['MUTUAL_FRIEND'])
 def mutual_friend_job_with_lcn():
 	params = {
 		'location': False,
@@ -34,8 +35,9 @@ def mutual_friend_job_with_lcn():
 	except:
 		print "mutual_friend_job_with_lcn is failed!"
 
+# day_of_week=os.environ.get('R_DAY'), 
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='11', name=JOB['RETRIEVE']['ALL_INTEREST_SIMILARITY'])
+@scheduler.scheduled_job('cron', hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='11', name=JOB['RETRIEVE']['ALL_INTEREST_SIMILARITY'])
 def interest_similarity_sqs_job():
 	try:
 		print "interest_similarity_sqs_job is running."
@@ -43,7 +45,8 @@ def interest_similarity_sqs_job():
 	except:
 		print "interest_similarity_sqs_job is failed!"
 
-@scheduler.scheduled_job('cron', day_of_week=os.environ.get('R_DAY'), hour=os.environ.get('R_HOUR_OFFSET'), minute=os.environ.get('R_MINUTE'), id='12', name=JOB['RETRIEVE']['MUTUAL_FRIEND'])
+# day_of_week=os.environ.get('R_DAY'), 
+@scheduler.scheduled_job('cron', hour=os.environ.get('R_HOUR_OFFSET'), minute=os.environ.get('R_MINUTE'), id='12', name=JOB['RETRIEVE']['MUTUAL_FRIEND'])
 def mutual_friend_sqs_job():
 	try:
 		print "mutual_friend_sqs_job is running."
