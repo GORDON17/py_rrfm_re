@@ -7,6 +7,8 @@ from urllib2 import Request, urlopen
 from pandas.io.json import json_normalize
 from configurations.env_configs import *
 
+import pdb
+
 
 # def interests_sim(id):
 # 	df_new = _matrix()
@@ -320,6 +322,7 @@ def process_single_interest_similarity(uri, type, params):
 
 		connections_data = APIService().request_filter(CONNECTIONS_FILTER)
 		decisions_data = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
+		print "Decision matrix shape: ", len(decisions_data)
 		row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
 		offset = 0
@@ -398,7 +401,8 @@ def _filtered_profile_matrix(df, profile, params, connections_data, decisions_da
 				df_copy = df_copy[(df_copy.nationality == profile.nationality)]
 				print 'Filtered by nationality: ', profile.nationality, 'Total left: ', df_copy.shape
 
-		df_copy = df_copy[(df_copy.account_id != _isConnected(profile.account_id, df_copy.account_id, connections_data)) | (df_copy.account_id != _isDecided(profile.account_id, df_copy.account_id, decisions_data))]
+		df_copy = df_copy[df_copy.apply(lambda x: x.account_id != _isDecided(profile.account_id, x.account_id, decisions_data), axis=1)]
+		df_copy = df_copy[df_copy.apply(lambda x: x.account_id != _isConnected(profile.account_id, x.account_id, connections_data), axis=1)]
 
 		print 'Account: ', profile.account_id, 'After filtering: ', df_copy.shape
 		return df_copy
