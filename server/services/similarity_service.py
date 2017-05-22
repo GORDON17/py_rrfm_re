@@ -314,6 +314,40 @@ def _events_matrix_with_loc(location, uri):
 from mongodb import update_interests_table
 from api_service import *
 
+def process_single_interest_similarity(uri, type, params):
+		structured_df = _manipulate_profile_matrix(_request_data(uri))
+		print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
+
+		connections_data = APIService().request_filter(CONNECTIONS_FILTER)
+		decisions_data = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
+		row_count, column_count = structured_df[structured_df.columns[4:]].shape
+
+		offset = 0
+
+		prepared_df = structured_df[['account_id', 'location', 'nationality', 'chapter']].copy()
+		i = _index_of(params['id'], prepared_df)
+		print 'Processing records: ', i, ' to ', i + 1
+		list_interest_sim = _calculate_similarity(structured_df[structured_df.columns[4:]].copy(), i, 1)
+
+		count = 0
+		for index, profile in prepared_df[i:(i+1)].iterrows():
+				sim_list = pd.Series(list_interest_sim[count].tolist())
+				df = copy.deepcopy(prepared_df)
+				df['interest_similarity'] = 1 - sim_list.values
+				df['interest_count'] = (1 - sim_list.values) * column_count
+				df['interest_count'] = df['interest_count'].astype(int)
+
+				df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data, decisions_data).sort_values(by='interest_similarity', ascending=0)[1:11]
+				print df_profile_r
+				del df
+				print count, 'Processed interest similarity for account: ', profile.account_id
+				count += 1
+
+		del list_interest_sim
+
+
+
+
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
 				print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
