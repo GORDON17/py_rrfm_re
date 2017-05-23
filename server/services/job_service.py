@@ -182,6 +182,17 @@ def mp_retrieve_mutual_friend():
 		sqs.push_objects_into_vault(vaults[i:i + SIZE])
 
 
+def run_all_jobs(params):
+	p = Process(target=mp_all_jobs, args=(params,))
+	p.start()
+
+def mp_all_jobs(params):
+	mp_process_all_interest_similarity(params)
+	mp_generate_mutual_friends(params)
+	mp_retrieve_interest_similarity()
+	mp_retrieve_mutual_friend()
+
+
 # @sched.scheduled_job('interval', minutes=0.1, id='0', name='social_interest_similarity')
 # def timed_job():
 # 		job_id = '0'

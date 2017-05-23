@@ -7,6 +7,7 @@ from apscheduler.schedulers.background import BlockingScheduler
 scheduler = BlockingScheduler()
 # hour_offset_6 = int(os.environ.get('G_HOUR')) + 6
 
+"""
 # day_of_week=os.environ.get('G_DAY'), 
 @scheduler.scheduled_job('cron', hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
 def all_interest_similarity_job_with_lcn():
@@ -54,6 +55,19 @@ def mutual_friend_sqs_job():
 	except:
 		print "mutual_friend_sqs_job is failed!"
 
+"""
 
+@scheduler.scheduled_job('cron', hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name="all_jobs")
+def all_jobs():
+	params = {
+		'location': False,
+		'chapter': True,
+		'nationality': False
+	}
+	try:
+		print "all_jobs is running."
+		run_all_jobs(params)
+	except:
+		print "all_jobs is failed!"
 
 scheduler.start()
