@@ -163,7 +163,9 @@ def r_interest_similarity_job():
 	p.start()
 
 def mp_retrieve_interest_similarity():
+	print "Sending interest similarity intros to Vault ..."
 	vaults = build_interest_recommendation_vault_objects()
+	print "Total vault objects: ", len(vaults)
 	sqs = SQSService()
 
 	for i in xrange(0, len(vaults), SIZE):
@@ -175,7 +177,9 @@ def r_mutual_friend_job():
 	p.start()
 
 def mp_retrieve_mutual_friend():
+	print "Sending mutual intros to Vault ..."
 	vaults = build_mutual_recommendation_vault_objects()
+	print "Total vault objects: ", len(vaults)
 	sqs = SQSService()
 
 	for i in xrange(0, len(vaults), SIZE):
