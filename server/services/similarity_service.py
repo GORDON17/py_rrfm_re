@@ -374,9 +374,11 @@ def process_interest_similarity(uri, type, params):
 								df['interest_count'] = (1 - sim_list.values) * column_count
 								df['interest_count'] = df['interest_count'].astype(int)
 								if profile.account_id == 790:# or profile.account_id == 28071: 
-									df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data, decisions_data).sort_values(by='interest_similarity', ascending=0)[1:501]
+									df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data, decisions_data).sort_values(by='interest_similarity', ascending=0)[1:11]
 								else:
 									df_profile_r = _filtered_profile_matrix(df, profile, params, connections_data, decisions_data).sort_values(by='interest_similarity', ascending=0)[1:11]
+
+								print "Total results: ", df_profile_r.shape
 								update_interests_table(profile.account_id, df_profile_r, type)
 								del df
 								print count, 'Processed interest similarity for account: ', profile.account_id
