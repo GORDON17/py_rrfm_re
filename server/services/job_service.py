@@ -164,17 +164,12 @@ def r_interest_similarity_job():
 
 def mp_retrieve_interest_similarity():
 	print "Sending interest similarity intros to Vault ..."
-	length = len(vaults)
 	vaults = build_interest_recommendation_vault_objects()
-	print "Total vault objects: ", length
+	print "Total vault objects: ", len(vaults)
 	sqs = SQSService()
 
-	count = 1
-	for i in xrange(0, length, SIZE):
-		sqs.push_objects_into_vault(vaults[:SIZE])
-		del vaults[:SIZE]
-		count += 1
-	print "Sent SQS: ", count
+	for i in xrange(0, len(vaults), SIZE):
+		sqs.push_objects_into_vault(vaults[i:i + SIZE])
 
 
 def r_mutual_friend_job():
@@ -183,17 +178,13 @@ def r_mutual_friend_job():
 
 def mp_retrieve_mutual_friend():
 	print "Sending mutual intros to Vault ..."
-	length = len(vaults)
 	vaults = build_mutual_recommendation_vault_objects()
-	print "Total vault objects: ", length
+	print "Total vault objects: ", len(vaults)
 	sqs = SQSService()
 
-	count = 1
-	for i in xrange(0, length, SIZE):
-		sqs.push_objects_into_vault(vaults[:SIZE])
-		del vaults[:SIZE]
-		count += 1
-	print "Sent SQS: ", count
+	for i in xrange(0, len(vaults), SIZE):
+		sqs.push_objects_into_vault(vaults[i:i + SIZE])
+
 
 def run_all_jobs(params):
 	p = Process(target=mp_all_jobs, args=(params,))
