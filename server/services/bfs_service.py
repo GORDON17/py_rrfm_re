@@ -157,7 +157,7 @@ def _graph(uri):
     return hash
 
 
-def _bfs(graph, user_id, user_data, params, decisions, penddings):
+def _bfs(graph, user_id, user_data, params, decisions):
     commons = {}
     visited, queue = set(), []
     visited.add(user_id)
@@ -185,11 +185,6 @@ def _bfs(graph, user_id, user_data, params, decisions, penddings):
         or decisions[str(user_id)]['decisions'][str(current['id'])] == 2):
             continue
 
-        if penddings.get(str(user_id)) is not None \
-        and penddings[str(user_id)]['connections'].get(str(current['id'])) is not None \
-        and penddings[str(user_id)]['connections'][str(current['id'])] == 1:
-            continue
-
         if current['id'] not in visited:
             visited.add(current['id'])
 
@@ -214,12 +209,11 @@ from mongodb import update_mutual_friend_recommendations
 def process_mutual_friends(uri, params):
     networks = _graph(uri)
     decisions = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
-    penddings = APIService().request_filter(CONNECTIONS_FILTER + "?only_pendding=true")
 
     for key, value in networks.iteritems():
         print("processing mutual friends for account: ", key)
 
-        best_recommendations = _bfs(networks, key, value, params, decisions, penddings)
+        best_recommendations = _bfs(networks, key, value, params, decisions)
         update_mutual_friend_recommendations(best_recommendations)
         print("finished mutual friends for account: ", key)
 

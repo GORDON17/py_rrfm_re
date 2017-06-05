@@ -117,6 +117,7 @@ def mp_process_all_interest_similarity(params):
 		job_obj_id = add_job(job_id=job_id, name=job_name)
 		
 		print('g_all_interest_similarity job is running.')
+		drop_interest_similarity_collection()
 		process_interest_similarity(SOCIAL_INTERESTS_URI, INTEREST_TYPES['SOCIAL'], params)
 		# process_interest_similarity(BUSINESS_INTERESTS_URI, INTEREST_TYPES['BUSINESS'], params)
 		# process_interest_similarity(LIFESTYLE_INTERESTS_URI, INTEREST_TYPES['LIFESTYLE'], params)
@@ -145,6 +146,7 @@ def mp_generate_mutual_friends(params):
 		job_obj_id = add_job(job_id=job_id, name=job_name)
 		
 		print('g_mutual_friend job is running.')
+		drop_mutual_friend_collection()
 		process_mutual_friends(CONNECTIONS_URI, params)
 
 		if job_obj_id:

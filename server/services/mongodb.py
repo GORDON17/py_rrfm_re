@@ -245,6 +245,15 @@ def _build_vault_object(obj, target, context):
 
 
 
+def drop_mutual_friend_collection():
+	print "Droping mutual friend collection ..."
+	MutualFriend.drop_collection()
+	print "Mutual friend droped"
+
+def drop_interest_similarity_collection():
+	print "Droping interest similarity collection ..."
+	InterestSimilarity.drop_collection()
+	print "Interest similarity collection droped"
 
 
 
