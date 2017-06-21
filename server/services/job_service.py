@@ -170,8 +170,11 @@ def mp_retrieve_interest_similarity():
 	print "Total vault objects: ", len(vaults)
 	sqs = SQSService()
 
+	count = 1
 	for i in xrange(0, len(vaults), SIZE):
 		sqs.push_objects_into_vault(vaults[i:i + SIZE])
+		count += 1
+	print "Total batch sent: ", count
 
 
 def r_mutual_friend_job():
@@ -184,8 +187,11 @@ def mp_retrieve_mutual_friend():
 	print "Total vault objects: ", len(vaults)
 	sqs = SQSService()
 
+	count = 1
 	for i in xrange(0, len(vaults), SIZE):
 		sqs.push_objects_into_vault(vaults[i:i + SIZE])
+		count += 1
+	print "Total batch sent: ", count
 
 
 def run_all_jobs(params):
