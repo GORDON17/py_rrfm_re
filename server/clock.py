@@ -2,9 +2,9 @@ import os
 from configurations.constants import JOB
 from services.job_service import *
 
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
-scheduler = BlockingScheduler()
+scheduler = BackgroundScheduler()
 # hour_offset_6 = int(os.environ.get('G_HOUR')) + 6
 
 
