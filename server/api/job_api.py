@@ -52,10 +52,12 @@ class JobGenerateAPI(Resource):
 												hour=hour, 
 												minute=minute,
 												id='0',
-												name=JOB['GENERATE']['SOCIAL_INTEREST_SIMILARITY'])
+												name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
+
+				three_hour = hour + 3
 				scheduler_generate.add_job(g_mutual_friends_job, 'cron', args=[params],
 												day_of_week=day, 
-												hour=hour, 
+												hour=three_hour, 
 												minute=minute,
 												id='1',
 												name=JOB['GENERATE']['MUTUAL_FRIEND'])
@@ -94,7 +96,7 @@ class JobRetrieveAPI(Resource):
 												hour=hour, 
 												minute=minute,
 												id='0',
-												name=JOB['RETRIEVE']['SOCIAL_INTEREST_SIMILARITY'])
+												name=JOB['RETRIEVE']['ALL_INTEREST_SIMILARITY'])
 				scheduler_retrieve.add_job(r_mutual_friend_job, 'cron',
 												day_of_week=day, 
 												hour=hour, 
@@ -146,5 +148,66 @@ class JobListAPI(Resource):
 
 
 
+@job_api.resource("/runscheduler/all")
+class AllJobsAPI(Resource):
+	@staticmethod
+	def post():
+			parser = reqparse.RequestParser()
+			parser.add_argument('day', type=int, help='Day cannot be blank!')
+			parser.add_argument('hour', type=int, help='Hour cannot be blank!')
+			parser.add_argument('minute', type=int, help='Minute cannot be blank!')
+			args = parser.parse_args()
+			day = args['day']
+			hour = args['hour']
+			minute = args['minute']
 
+			if not check_token(parser):
+				return {'status': 403, 'message': 'Permission Denied'}
+
+			json_data = request.get_json(force=True)
+			print "Setup a generate scheduler at: ", (day, hour, minute)
+
+			try:
+				# global sched
+				global scheduler_generate
+
+				params = {
+					'location': json_data['location'],
+					'chapter': json_data['chapter'],
+					'nationality': json_data['nationality']
+				}
+
+				scheduler_generate.add_job(g_all_interest_similarity_job, 'cron', args=[params], 
+												hour=hour, 
+												minute=minute,
+												id='0',
+												name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
+
+				three_hour = hour + 3
+				scheduler_generate.add_job(g_mutual_friends_job, 'cron', args=[params], 
+												hour=three_hour, 
+												minute=minute,
+												id='1',
+												name=JOB['GENERATE']['MUTUAL_FRIEND'])
+
+				nine_hour = three_hour + 6
+				scheduler_retrieve.add_job(r_interest_similarity_job, 'cron', 
+												hour=nine_hour, 
+												minute=minute,
+												id='2',
+												name=JOB['RETRIEVE']['ALL_INTEREST_SIMILARITY'])
+
+				eleven_hour = nine_hour + 2
+				scheduler_retrieve.add_job(r_mutual_friend_job, 'cron', 
+												hour=eleven_hour, 
+												minute=minute,
+												id='3',
+												name=JOB['RETRIEVE']['MUTUAL_FRIEND'])
+				scheduler_generate.start()
+				# sched.schedule_jobs(day_of_week=2, hour=9, minute=33)
+				# sched.start()
+				return {'status': 200, 'message': 'The scheduler is running.'}
+			except:
+				print sys.exc_info()[0]
+				return {'status': 400, 'message': 'The scheduler is failed to start.'}
 
