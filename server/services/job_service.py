@@ -201,7 +201,7 @@ def run_all_jobs(params):
 	p.start()
 
 def mp_all_jobs(params):
-	call(['heroku restart --app ivyrecommendation-staging'])
+	call('heroku restart', shell=True)
 	mp_process_all_interest_similarity(params)
 	mp_generate_mutual_friends(params)
 	mp_retrieve_interest_similarity()
