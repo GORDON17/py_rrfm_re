@@ -196,8 +196,8 @@ def mp_retrieve_mutual_friend():
 
 import os
 import heroku3
-heroku_conn = heroku3.from_key()
-heroku_app = heroku_conn.apps()[os.environ.get('HEROKU_KEY')]
+heroku_conn = heroku3.from_key(os.environ.get('HEROKU_KEY'))
+heroku_app = heroku_conn.apps()['ivyrecommendation-staging']
 
 def run_all_jobs(params):
 	p = Process(target=mp_all_jobs, args=(params,))
