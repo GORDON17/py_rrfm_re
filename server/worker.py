@@ -5,7 +5,7 @@ from services.job_service import *
 from apscheduler.schedulers.background import BackgroundScheduler
 
 scheduler = BackgroundScheduler()
-scheduler.start()
+
 params = {
     'location': False,
     'chapter': True,
@@ -15,7 +15,7 @@ params = {
 hour=os.environ.get('G_HOUR')
 minute=os.environ.get('G_MINUTE')
 
-scheduler.add_job(g_all_interest_similarity_job, 
+scheduler.add_job(mp_process_all_interest_similarity, 
                     'cron', 
                     args=[params],
                     hour=hour, 
@@ -24,5 +24,5 @@ scheduler.add_job(g_all_interest_similarity_job,
                     name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
 
 
-
+scheduler.start()
 
