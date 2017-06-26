@@ -18,3 +18,4 @@ pandas==0.19.2
 APScheduler==3.3.1
 boto3==1.0.0
 requests==2.18.1
+Heroku3==3.3.0
