@@ -5,7 +5,7 @@ from services.job_service import *
 from apscheduler.schedulers.background import BackgroundScheduler
 
 scheduler = BackgroundScheduler()
-
+scheduler.start()
 params = {
     'location': False,
     'chapter': True,
@@ -23,6 +23,6 @@ scheduler.add_job(g_all_interest_similarity_job,
                     id='0',
                     name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
 
-scheduler.start()
+
 
 
