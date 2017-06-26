@@ -194,14 +194,14 @@ def mp_retrieve_mutual_friend():
 	print "Total batch sent: ", count
 
 
-from subprocess import call
+import requests
 
 def run_all_jobs(params):
 	p = Process(target=mp_all_jobs, args=(params,))
 	p.start()
 
 def mp_all_jobs(params):
-	call('heroku restart', shell=True)
+	r = requests.delete('https://api.heroku.com/apps/ivyrecommendation-staging/dynos')
 	mp_process_all_interest_similarity(params)
 	mp_generate_mutual_friends(params)
 	mp_retrieve_interest_similarity()
