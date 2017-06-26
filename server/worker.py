@@ -23,6 +23,6 @@ scheduler.add_job(g_all_interest_similarity_job,
                     id='0',
                     name=JOB['GENERATE']['ALL_INTEREST_SIMILARITY'])
 
-
+scheduler.start()
 
 
