@@ -153,11 +153,9 @@ class AllJobsAPI(Resource):
 	@staticmethod
 	def post():
 			parser = reqparse.RequestParser()
-			parser.add_argument('day', type=int, help='Day cannot be blank!')
 			parser.add_argument('hour', type=int, help='Hour cannot be blank!')
 			parser.add_argument('minute', type=int, help='Minute cannot be blank!')
 			args = parser.parse_args()
-			day = args['day']
 			hour = args['hour']
 			minute = args['minute']
 
