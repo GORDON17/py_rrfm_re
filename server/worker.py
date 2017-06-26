@@ -7,13 +7,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 scheduler = BackgroundScheduler({
-    'apscheduler.jobstores.mongo': {
-         'type': 'mongodb'
-    },
-    'apscheduler.jobstores.default': {
-        'type': 'mongodb',
-        'url': os.environ.get('MONGO_URL')
-    },
     'apscheduler.executors.default': {
         'class': 'apscheduler.executors.pool:ThreadPoolExecutor',
         'max_workers': '10'
