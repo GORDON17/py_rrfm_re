@@ -194,10 +194,10 @@ def mp_retrieve_mutual_friend():
 	print "Total batch sent: ", count
 
 
-
+import os
 import heroku3
-heroku_conn = heroku3.from_key('9061a11e-091e-4153-9fb8-a712078a59e6')
-heroku_app = heroku_conn.apps()['ivyrecommendation-staging']
+heroku_conn = heroku3.from_key()
+heroku_app = heroku_conn.apps()[os.environ.get('HEROKU_KEY')]
 
 def run_all_jobs(params):
 	p = Process(target=mp_all_jobs, args=(params,))
