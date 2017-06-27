@@ -204,11 +204,11 @@ def run_all_jobs(params):
 	p.start()
 
 def mp_all_jobs(params):
-	heroku_app.restart()
 	mp_process_all_interest_similarity(params)
 	mp_generate_mutual_friends(params)
 	mp_retrieve_interest_similarity()
 	mp_retrieve_mutual_friend()
+	heroku_app.restart()
 
 
 
