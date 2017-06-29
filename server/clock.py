@@ -38,7 +38,7 @@ def mutual_friend_job_with_lcn():
 		print "mutual_friend_job_with_lcn is failed!"
 
 # day_of_week=os.environ.get('R_DAY'), 
-"""
+
 @scheduler.scheduled_job('cron', hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='11', name=JOB['RETRIEVE']['ALL_INTEREST_SIMILARITY'])
 def interest_similarity_sqs_job():
 	try:
@@ -56,7 +56,7 @@ def mutual_friend_sqs_job():
 	except:
 		print "mutual_friend_sqs_job is failed!"
 
-
+"""
 
 @scheduler.scheduled_job('cron', hour=os.environ.get('G_HOUR'), minute=os.environ.get('G_MINUTE'), id='01', name="all_jobs")
 def all_jobs():
