@@ -158,7 +158,10 @@ def mp_generate_mutual_friends(params):
 
 from services.sqs_service import *
 SIZE = 100
-
+import os
+import heroku3
+heroku_conn = heroku3.from_key(os.environ.get('HEROKU_KEY'))
+heroku_app = heroku_conn.apps()[os.environ.get('APP_NAME')]
 
 def r_interest_similarity_job():
 	p = Process(target=mp_retrieve_interest_similarity)
@@ -192,6 +195,7 @@ def mp_retrieve_mutual_friend():
 		sqs.push_objects_into_vault(vaults[i:i + SIZE])
 		count += 1
 	print "Total batch sent: ", count
+	heroku_app.restart()
 
 
 def run_all_jobs(params):
