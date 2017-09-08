@@ -26,8 +26,9 @@ class APIService(object):
         request = Request(url)
         request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
         response = json.loads(urlopen(request).read())
-
-        if len(response) < 1:
+        size = len(response)
+        print ("Response size: ", size)
+        if size < 1:
             break
         else:
             data += response
