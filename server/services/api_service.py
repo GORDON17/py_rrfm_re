@@ -4,7 +4,6 @@ from urllib2 import Request, urlopen
 from configurations.env_configs import RAILS_TOKEN
 
 class APIService(object):
-	offset = 0
   limit = 1000
 
 	def __init__(self):
@@ -19,7 +18,7 @@ class APIService(object):
 
 	def get_request(self, uri):
     data = []
-    
+    offset = 0
     while True:
         params = urlencode({'limit':self.limit, 'offset':self.offset})
         url = uri + '?' + params
