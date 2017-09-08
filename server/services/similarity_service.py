@@ -6,6 +6,7 @@ from scipy.stats import pearsonr
 from urllib2 import Request, urlopen
 from pandas.io.json import json_normalize
 from configurations.env_configs import *
+from services.api_service import *
 
 import pdb
 
@@ -220,7 +221,7 @@ def _request_data(uri):
 
 
 def _events_matrix_with_loc(location, uri):
-	df_event = _request_data(uri)
+	df_event = pd.DataFrame(APIService().get_request(uri))
 	df_event[['account_id']] = df_event[['account_id']].astype(int)
 	df_event[['count']] = df_event[['count']].astype(int)
 	df_event[['event_type']] = df_event[['event_type']].astype(int)
@@ -317,7 +318,7 @@ from mongodb import update_interests_table
 from api_service import *
 
 def process_single_interest_similarity(uri, type, params):
-		structured_df = _manipulate_profile_matrix(_request_data(uri))
+		structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri)))
 		print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
 		connections_data = APIService().request_filter(CONNECTIONS_FILTER)
@@ -352,7 +353,7 @@ def process_single_interest_similarity(uri, type, params):
 
 
 def process_interest_similarity(uri, type, params):
-				structured_df = _manipulate_profile_matrix(_request_data(uri))
+				structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri)))
 				print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
 				connections_data = APIService().request_filter(CONNECTIONS_FILTER)

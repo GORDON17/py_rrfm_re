@@ -3,6 +3,7 @@ import pandas as pd
 from urllib2 import Request, urlopen
 
 from configurations.env_configs import *
+from services.api_service import *
 
 def _request_data(uri):
 	print ("Sending request to:", uri)
@@ -14,6 +15,6 @@ def _request_data(uri):
 	return df
 
 def get_accounts():
-    df_accounts = _request_data(ACCOUNTS_URI)
+    df_accounts = pd.DataFrame(APIService().get_request(ACCOUNTS_URI))
     df_accounts['location'].fillna('empty', inplace=True)
     return df_accounts

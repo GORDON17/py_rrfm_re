@@ -118,7 +118,7 @@ from collections import OrderedDict
 
 def _graph(uri):
     hash = dict()
-    connections = _request_data(uri)
+    connections = APIService().get_request(uri)
     for connection in connections:
         account_id = int(connection['account_id'])
         requestor_id = int(connection['requestor_id'])
