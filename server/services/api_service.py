@@ -20,7 +20,7 @@ class APIService(object):
     data = []
     offset = 0
     while True:
-        params = urlencode({'limit':self.limit, 'offset':self.offset})
+        params = urlencode({'limit':self.limit, 'offset':offset})
         url = uri + '?' + params
         print ("Sending request to:", url)
         request = Request(url)
