@@ -5,7 +5,7 @@ from urllib2 import Request, urlopen
 from configurations.env_configs import RAILS_TOKEN, API_LIMIT
 
 class APIService(object):
-  limit = API_LIMIT
+    limit = API_LIMIT
 
 	def __init__(self):
 		super(APIService, self).__init__()
