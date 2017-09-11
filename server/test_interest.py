@@ -117,8 +117,8 @@ def _isDecided(account_id, user_id, decisions_data):
 def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(_request_data(uri))
 				print ("Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape)
-				connections_data = APIService().request_filter(CONNECTIONS_FILTER)
-				decisions_data = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
+				connections_data = APIService().get_request(CONNECTIONS_FILTER)
+				decisions_data = APIService().get_request(DECISIONS_FILTER + "?trackable_type=Account")
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
 				offset = 0

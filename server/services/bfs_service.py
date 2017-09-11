@@ -208,7 +208,7 @@ from mongodb import update_mutual_friend_recommendations
 
 def process_mutual_friends(uri, params):
     networks = _graph(uri)
-    decisions = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
+    decisions = APIService().get_request(DECISIONS_FILTER + "?trackable_type=Account")
 
     for key, value in networks.iteritems():
         print("processing mutual friends for account: ", key)
