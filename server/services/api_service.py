@@ -5,7 +5,7 @@ from urllib2 import Request, urlopen
 from configurations.env_configs import RAILS_TOKEN, API_LIMIT
 
 class APIService(object):
-	limit = API_LIMIT
+	g_limit = API_LIMIT
 
 	def __init__(self):
 		super(APIService, self).__init__()
@@ -17,11 +17,13 @@ class APIService(object):
 		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
 		return json.loads(urlopen(request).read())
 
-	def get_request(self, uri):
+	def get_request(self, uri, l_limit=None):
 		data = []
 		offset = 0
+		limit = l_limit ? l_limit : self.g_limit
+		
 		while True:
-			params = urlencode({'limit':self.limit, 'offset':offset})
+			params = urlencode({'limit':limit, 'offset':offset})
 			url = uri + '?' + params
 			print ("Sending request to:", url)
 			request = Request(url)
@@ -33,7 +35,7 @@ class APIService(object):
 				break
 			else:
 				data += response
-				offset += self.limit
+				offset += limit
 
 		print("Total results: ", len(data))
 		return data
