@@ -33,7 +33,7 @@ class APIService(object):
 				break
 			else:
 				data += response
-				offset += limit
+				offset += self.limit
 
 			print("Total results: ", len(data))
 			return data
