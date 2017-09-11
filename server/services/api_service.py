@@ -17,8 +17,12 @@ class APIService(object):
 		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
 		return json.loads(urlopen(request).read())
 
-	def get_request(self, uri, params="", l_limit=None):
-		data = []
+	def get_request(self, uri, params="", l_limit=None, response_type='list'):
+		data = {
+        'list': [],
+        'dict': {},
+    }[response_type]
+
 		offset = 0
 		limit = l_limit if l_limit is not None else self.g_limit
 
@@ -34,7 +38,11 @@ class APIService(object):
 			if size < 1:
 				break
 			else:
-				data += response
+				if response_type == 'list':
+					data += response
+				elif response_type == 'dict':
+					data.update(response)
+					
 				offset += limit
 
 		print("Total results: ", len(data))
