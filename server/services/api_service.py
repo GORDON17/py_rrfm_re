@@ -35,5 +35,5 @@ class APIService(object):
 				data += response
 				offset += self.limit
 
-			print("Total results: ", len(data))
-			return data
+		print("Total results: ", len(data))
+		return data
