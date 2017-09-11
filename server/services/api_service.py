@@ -28,7 +28,7 @@ class APIService(object):
 
 		while True:
 			limitation = urlencode({'limit':limit, 'offset':offset})
-			url = uri + '?' + params + limitation
+			url = uri + '?' + params + '&' + limitation
 			print ("Sending request to:", url)
 			request = Request(url)
 			request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)

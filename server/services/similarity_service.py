@@ -321,8 +321,8 @@ def process_single_interest_similarity(uri, type, params):
 		structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri, '', 60)))
 		print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
-		connections_data = APIService().get_request(CONNECTIONS_FILTER, '', 1000, 'dict')
-		decisions_data = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 1000, 'dict')
+		connections_data = APIService().get_request(CONNECTIONS_FILTER, '', 10000, 'dict')
+		decisions_data = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 10000, 'dict')
 		print "Decision matrix shape: ", len(decisions_data)
 		row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
@@ -356,8 +356,8 @@ def process_interest_similarity(uri, type, params):
 				structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri, '', 60)))
 				print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
-				connections_data = APIService().get_request(CONNECTIONS_FILTER, '', 1000, 'dict')
-				decisions_data = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 1000, 'dict')
+				connections_data = APIService().get_request(CONNECTIONS_FILTER, '', 10000, 'dict')
+				decisions_data = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 10000, 'dict')
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
 				offset = 0
