@@ -322,7 +322,7 @@ def process_single_interest_similarity(uri, type, params):
 		print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
 		connections_data = APIService().get_request(CONNECTIONS_FILTER, 1000)
-		decisions_data = APIService().get_request(DECISIONS_FILTER + "?trackable_type=Account", 1000)
+		decisions_data = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 1000)
 		print "Decision matrix shape: ", len(decisions_data)
 		row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
@@ -357,7 +357,7 @@ def process_interest_similarity(uri, type, params):
 				print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
 				connections_data = APIService().get_request(CONNECTIONS_FILTER, 1000)
-				decisions_data = APIService().get_request(DECISIONS_FILTER + "?trackable_type=Account", 1000)
+				decisions_data = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 1000)
 				row_count, column_count = structured_df[structured_df.columns[4:]].shape
 
 				offset = 0

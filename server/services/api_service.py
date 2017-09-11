@@ -17,14 +17,14 @@ class APIService(object):
 		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
 		return json.loads(urlopen(request).read())
 
-	def get_request(self, uri, l_limit=None):
+	def get_request(self, uri, params="", l_limit=None):
 		data = []
 		offset = 0
 		limit = l_limit if l_limit is not None else self.g_limit
 
 		while True:
-			params = urlencode({'limit':limit, 'offset':offset})
-			url = uri + '?' + params
+			limitation = urlencode({'limit':limit, 'offset':offset})
+			url = uri + '?' + params + limitation
 			print ("Sending request to:", url)
 			request = Request(url)
 			request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
