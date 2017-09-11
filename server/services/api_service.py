@@ -18,22 +18,22 @@ class APIService(object):
 		return json.loads(urlopen(request).read())
 
 	def get_request(self, uri):
-	data = []
-	offset = 0
-	while True:
-		params = urlencode({'limit':self.limit, 'offset':offset})
-		url = uri + '?' + params
-		print ("Sending request to:", url)
-		request = Request(url)
-		request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
-		response = json.loads(urlopen(request).read())
-		size = len(response)
-		print ("Response size: ", size)
-		if size < 1:
-			break
-		else:
-			data += response
-			offset += limit
+		data = []
+		offset = 0
+		while True:
+			params = urlencode({'limit':self.limit, 'offset':offset})
+			url = uri + '?' + params
+			print ("Sending request to:", url)
+			request = Request(url)
+			request.add_header('HTTP_X_IVY_SESSION_TOKEN', RAILS_TOKEN)
+			response = json.loads(urlopen(request).read())
+			size = len(response)
+			print ("Response size: ", size)
+			if size < 1:
+				break
+			else:
+				data += response
+				offset += limit
 
-		print("Total results: ", len(data))
-		return data
+			print("Total results: ", len(data))
+			return data
