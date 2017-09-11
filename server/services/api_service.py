@@ -20,8 +20,8 @@ class APIService(object):
 	def get_request(self, uri, l_limit=None):
 		data = []
 		offset = 0
-		limit = l_limit ? l_limit : self.g_limit
-		
+		limit = l_limit if l_limit is not None else self.g_limit
+
 		while True:
 			params = urlencode({'limit':limit, 'offset':offset})
 			url = uri + '?' + params
