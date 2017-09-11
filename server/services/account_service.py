@@ -15,6 +15,6 @@ def _request_data(uri):
 	return df
 
 def get_accounts():
-    df_accounts = pd.DataFrame(APIService().get_request(ACCOUNTS_URI, 500))
+    df_accounts = pd.DataFrame(APIService().get_request(ACCOUNTS_URI, '', 500))
     df_accounts['location'].fillna('empty', inplace=True)
     return df_accounts
