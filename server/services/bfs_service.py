@@ -118,7 +118,7 @@ from collections import OrderedDict
 
 def _graph(uri):
     hash = dict()
-    connections = _request_data(uri)
+    connections = APIService().get_request(uri, '', 1000)
     for connection in connections:
         account_id = int(connection['account_id'])
         requestor_id = int(connection['requestor_id'])
@@ -208,7 +208,7 @@ from mongodb import update_mutual_friend_recommendations
 
 def process_mutual_friends(uri, params):
     networks = _graph(uri)
-    decisions = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
+    decisions = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 10000, 'dict')
 
     for key, value in networks.iteritems():
         print("processing mutual friends for account: ", key)

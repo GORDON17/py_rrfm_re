@@ -207,7 +207,7 @@ def _bfs(graph, user_id, user_data, params, decisions):
 
 def process_mutual_friends(uri, params):
     networks = _graph(uri)
-    decisions = APIService().request_filter(DECISIONS_FILTER + "?trackable_type=Account")
+    decisions = APIService().get_request(DECISIONS_FILTER, "trackable_type=Account", 1000, 'dict')
 
     for key, value in networks.iteritems():
         print("processing mutual friends for account: ", key)
