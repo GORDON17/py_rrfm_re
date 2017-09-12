@@ -318,7 +318,7 @@ from mongodb import update_interests_table
 from api_service import *
 
 def process_single_interest_similarity(uri, type, params):
-		structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri, '', 60)))
+		structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri)))
 		print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
 		connections_data = APIService().get_request(CONNECTIONS_FILTER, '', 10000, 'dict')
@@ -353,7 +353,7 @@ def process_single_interest_similarity(uri, type, params):
 
 
 def process_interest_similarity(uri, type, params):
-				structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri, '', 60)))
+				structured_df = _manipulate_profile_matrix(pd.DataFrame(APIService().get_request(uri)))
 				print "Structured profile matrix shape:", structured_df[structured_df.columns[4:]].shape
 
 				connections_data = APIService().get_request(CONNECTIONS_FILTER, '', 10000, 'dict')
