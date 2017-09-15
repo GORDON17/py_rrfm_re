@@ -14,6 +14,7 @@ class SQSService(object):
 		self.client = self.session.client('sqs')
 
 	def push_objects_into_vault(self, objects):
+		print("Sending vault objects: ", objects)
 		response = self.client.send_message(
 			QueueUrl = SQS_QUEUE_URL,
 			MessageBody = json.dumps(objects))
