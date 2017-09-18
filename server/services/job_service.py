@@ -208,6 +208,9 @@ def mp_all_jobs(params):
 	mp_retrieve_interest_similarity()
 	mp_retrieve_mutual_friend()
 
+def restart_heroku():
+	heroku_app.restart()
+
 
 # @sched.scheduled_job('interval', minutes=0.1, id='0', name='social_interest_similarity')
 # def timed_job():

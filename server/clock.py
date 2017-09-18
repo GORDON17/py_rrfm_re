@@ -70,6 +70,8 @@ def all_jobs():
 	except:
 		print "all_jobs is failed!"
 
-
+@scheduler.scheduled_job('cron', hour=os.environ.get('R_HOUR'), minute=os.environ.get('R_MINUTE'), id='02', name="restart_heroku")
+def restart_heroku():
+	restart_heroku()
 
 scheduler.start()
