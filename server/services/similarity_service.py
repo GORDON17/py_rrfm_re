@@ -477,5 +477,5 @@ def _isDecided(account_id, user_id, decisions_data):
 	if decisions_data.get(str(account_id)) is None or decisions_data[str(account_id)]['decisions'].get(str(user_id)) is None:
 		return 0
 
-	return user_id if decisions_data[str(account_id)]['decisions'][str(user_id)] !== 0 else 0
+	return user_id if decisions_data[str(account_id)]['decisions'][str(user_id)] != 0 else 0
 
