@@ -1,6 +1,7 @@
 import json
 from urllib import urlencode
 from urllib2 import Request, urlopen
+import collections
 
 from configurations.env_configs import RAILS_TOKEN, API_LIMIT
 
@@ -41,9 +42,21 @@ class APIService(object):
 				if response_type == 'list':
 					data += response
 				elif response_type == 'dict':
-					data.update(response)
+					self.__update(data, response)
 					
 				offset += limit
 
 		print("Total results: ", len(data))
 		return data
+
+	def __update(self, d, u):
+    for k, v in u.iteritems():
+        if isinstance(d, collections.Mapping):
+            if isinstance(v, collections.Mapping):
+                r = self.__update(d.get(k, {}), v)
+                d[k] = r
+            else:
+                d[k] = u[k]
+        else:
+            d = {k: u[k]}
+    return d
