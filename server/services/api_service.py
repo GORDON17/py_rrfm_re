@@ -20,9 +20,9 @@ class APIService(object):
 
 	def get_request(self, uri, params="", l_limit=None, response_type='list'):
 		data = {
-        'list': [],
-        'dict': {},
-    }[response_type]
+				'list': [],
+				'dict': {},
+		}[response_type]
 
 		offset = 0
 		limit = l_limit if l_limit is not None else self.g_limit
@@ -50,13 +50,13 @@ class APIService(object):
 		return data
 
 	def __update(self, d, u):
-    for k, v in u.iteritems():
-        if isinstance(d, collections.Mapping):
-            if isinstance(v, collections.Mapping):
-                r = self.__update(d.get(k, {}), v)
-                d[k] = r
-            else:
-                d[k] = u[k]
-        else:
-            d = {k: u[k]}
-    return d
+		for k, v in u.iteritems():
+			if isinstance(d, collections.Mapping):
+				if isinstance(v, collections.Mapping):
+					r = self.__update(d.get(k, {}), v)
+					d[k] = r
+				else:
+					d[k] = u[k]
+			else:
+				d = {k: u[k]}
+		return d
